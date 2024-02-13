@@ -1,4 +1,4 @@
-from dags.sofascore_scraper.results_scraper import ResultScraper
+from sofascore_scraper.results_scraper import ResultScraper
 from config import *
 
 if __name__ == "__main__":

@@ -1,0 +1,13 @@
+version: '3'
+services:
+
+  airflow:
+    image: airflow:latest
+    container_name: airflow_scraper
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./scraped_data:/opt/airflow/scraped_data
+    entrypoint: tail -f /dev/null
