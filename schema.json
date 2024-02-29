@@ -1,6 +1,7 @@
 {
     "timestamp": "String",
     "season": "String",
+    "country": "String",
     "tournament": "String",
     "round": "String",
     "matchId": "String",

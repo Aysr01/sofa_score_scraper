@@ -46,7 +46,8 @@ class StatsScraper():
     def get_stats(self, match_id):
         stats_response = self.get_match_data(match_id)
         if stats_response.status_code != 200:
-            logger.error("Page not found, maybe the match doesn't start yet."
+            logger.error("Page not found, maybe the match doesn't start yet.\n"\
+                         "This is the url of the last sent request: {}".format(self.url)
                          )
             return None
         stats_json = stats_response.json()["statistics"]

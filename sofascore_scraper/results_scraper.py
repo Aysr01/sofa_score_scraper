@@ -36,13 +36,17 @@ class ResultScraper:
             try:
                 data.append(
                     (   
+                        event["id"],
                         event["startTimestamp"],
                         event["season"]["year"],
+                        event["tournament"]["category"]["name"],
                         event["tournament"]["name"],
+                        event.get("roundInfo", {"round": None})["round"],
                         event['homeTeam']['name'],
                         event['awayTeam']['name'],
                         event['homeScore'].get('current', None),
                         event['awayScore'].get('current', None),
+                        event.get("winnerCode", None),
                         event['homeTeam']["country"].get("name", None),
                         event['awayTeam']["country"].get("name", None),
                         event["homeTeam"]["national"],
@@ -57,9 +61,10 @@ class ResultScraper:
         df = pd.DataFrame(
             data,
             columns=[
-                "startTimestamp", "year", "tournament",
-                "home_team", "away_team", "home_score",
-                "away_score", "home_country", "away_country",
+                "id", "startTimestamp", "season", "country",
+                "tournament", "round", "home_team",
+                "away_team", "home_score", "away_score",
+                "winner_code", "home_country", "away_country",
                 "is_homeTeam_national", "is_awayTeam_national"
             ]
         )
