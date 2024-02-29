@@ -1,5 +1,3 @@
 test_sofascore_scraper
-.gitignore
 scraped_data/*.csv
-statics.json
-stats_data.json
+statistics.json
