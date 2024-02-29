@@ -1,0 +1,519 @@
+{
+    "timestamp": "String",
+    "season": "String",
+    "tournament": "String",
+    "round": "String",
+    "matchId": "String",
+    "homeTeam": "String",
+    "awayTeam": "String",
+    "homeScore": "Number",
+    "awayScore": "Number",
+    "homeTeamCountry": "String",
+    "awayTeamCountry": "String",
+    "is_homeTeam_National": "Boolean",
+    "is_awayTeam_National": "Boolean",
+    "winner_code": "Number",
+    "highlights": {
+      "goal": [
+        {
+          "homeScore": "Number",
+          "awayScore": "Number",
+          "time": "String",
+          "isHome": "Boolean",
+          "player": {
+            "name": "String",
+            "team": "String",
+            "position": "String",
+            "jerseyNumber": "Number"
+          },
+          "team": "String",
+          "type": "String",
+          "assist": {
+            "name": "String",
+            "team": "String",
+            "position": "String",
+            "jerseyNumber": "Number"
+          }
+        }
+      ],
+      "Card": [
+        {
+          "time": "String",
+          "isHome": "Boolean",
+          "player": {
+            "name": "String",
+            "team": "String",
+            "position": "String",
+            "jerseyNumber": "Number"
+          },
+          "type": "String",
+          "rescinded": "Boolean",
+          "reason": "String"
+        }
+      ],
+      "substitution": [
+        {
+          "time": "String",
+          "isHome": "Boolean",
+          "playerIn": {
+            "name": "String",
+            "team": "String",
+            "position": "String",
+            "jerseyNumber": "Number"
+          },
+          "playerOut": {
+            "name": "String",
+            "team": "String",
+            "position": "String",
+            "jerseyNumber": "Number"
+          },
+          "type": "String"
+        }
+      ],
+      "penaltyShootout": [
+        {
+          "homeScore": "Number",
+          "awayScore": "Number",
+          "isHome": "Boolean",
+          "sequence": "Number",
+          "player": {
+            "name": "String",
+            "team": "String",
+            "position": "String",
+            "jerseyNumber": "Number"
+          },
+          "state": "String",
+          "reason": "String"
+        }
+      ],
+      "injuryTime": [
+        {
+          "time": "String",
+          "length": "String"
+        }
+      ]
+    },
+    "statistics": {
+      "all": {
+        "possession": {
+          "home": "Number",
+          "away": "Number"
+        },
+        "shots": {
+          "Total_shots": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Shots_on_target": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Shots_off_target": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Blocked_shots": {
+            "home": "Number",
+            "away": "Number"
+          }
+        },
+        "TVData": {
+          "Corner_kicks": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Offsides": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Fouls": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Free_kicks": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Throw-ins": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Goal_kicks": {
+            "home": "Number",
+            "away": "Number"
+          }
+        },
+        "Shots_Extra": {
+          "Big_chances": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Big_chances_missed": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Counter_attacks": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Counter_attack_shots": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Counter_attack_goals": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Shots_inside_box": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Shots_outside_box": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Goalkeeper_saves": {
+            "home": "Number",
+            "away": "Number"
+          }
+        },
+        "Passes": {
+          "Passes": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Accurate_passes": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Long_balls": {
+            "home": "Number",
+            "away": "Number",
+            "homeTotal": "Number",
+            "awayTotal": "Number"
+          },
+          "Crosses": {
+            "home": "Number",
+            "away": "Number",
+            "homeTotal": "Number",
+            "awayTotal": "Number"
+          }
+        },
+        "Duels": {
+          "Dribbles": {
+            "home": "Number",
+            "away": "Number",
+            "homeTotal": "Number",
+            "awayTotal": "Number"
+          },
+          "Possession_lost": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Duels_won": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Aerials_won": {
+            "home": "Number",
+            "away": "Number"
+          }
+        },
+        "Defending": {
+          "Tackles": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Interceptions": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Clearances": {
+            "home": "Number",
+            "away": "Number"
+          }
+        }
+      },
+      "1ST": {
+        "possession": {
+          "home": "Number",
+          "away": "Number"
+        },
+        "shots": {
+          "Total_shots": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Shots_on_target": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Shots_off_target": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Blocked_shots": {
+            "home": "Number",
+            "away": "Number"
+          }
+        },
+        "TVData": {
+          "Corner_kicks": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Offsides": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Fouls": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Free_kicks": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Throw-ins": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Goal_kicks": {
+            "home": "Number",
+            "away": "Number"
+          }
+        },
+        "Shots_Extra": {
+          "Big_chances": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Big_chances_missed": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Counter_attacks": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Counter_attack_shots": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Counter_attack_goals": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Shots_inside_box": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Shots_outside_box": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Goalkeeper_saves": {
+            "home": "Number",
+            "away": "Number"
+          }
+        },
+        "Passes": {
+          "Passes": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Accurate_passes": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Long_balls": {
+            "home": "Number",
+            "away": "Number",
+            "homeTotal": "Number",
+            "awayTotal": "Number"
+          },
+          "Crosses": {
+            "home": "Number",
+            "away": "Number",
+            "homeTotal": "Number",
+            "awayTotal": "Number"
+          }
+        },
+        "Duels": {
+          "Dribbles": {
+            "home": "Number",
+            "away": "Number",
+            "homeTotal": "Number",
+            "awayTotal": "Number"
+          },
+          "Possession_lost": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Duels_won": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Aerials_won": {
+            "home": "Number",
+            "away": "Number"
+          }
+        },
+        "Defending": {
+          "Tackles": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Interceptions": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Clearances": {
+            "home": "Number",
+            "away": "Number"
+          }
+        }
+      },
+      "2ND": {
+        "possession": {
+          "home": "Number",
+          "away": "Number"
+        },
+        "shots": {
+          "Total_shots": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Shots_on_target": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Shots_off_target": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Blocked_shots": {
+            "home": "Number",
+            "away": "Number"
+          }
+        },
+        "TVData": {
+          "Corner_kicks": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Offsides": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Fouls": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Free_kicks": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Throw-ins": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Goal_kicks": {
+            "home": "Number",
+            "away": "Number"
+          }
+        },
+        "Shots_Extra": {
+          "Big_chances": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Big_chances_missed": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Counter_attacks": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Counter_attack_shots": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Counter_attack_goals": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Shots_inside_box": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Shots_outside_box": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Goalkeeper_saves": {
+            "home": "Number",
+            "away": "Number"
+          }
+        },
+        "Passes": {
+          "Passes": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Accurate_passes": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Long_balls": {
+            "home": "Number",
+            "away": "Number",
+            "homeTotal": "Number",
+            "awayTotal": "Number"
+          },
+          "Crosses": {
+            "home": "Number",
+            "away": "Number",
+            "homeTotal": "Number",
+            "awayTotal": "Number"
+          }
+        },
+        "Duels": {
+          "Dribbles": {
+            "home": "Number",
+            "away": "Number",
+            "homeTotal": "Number",
+            "awayTotal": "Number"
+          },
+          "Possession_lost": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Duels_won": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Aerials_won": {
+            "home": "Number",
+            "away": "Number"
+          }
+        },
+        "Defending": {
+          "Tackles": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Interceptions": {
+            "home": "Number",
+            "away": "Number"
+          },
+          "Clearances": {
+            "home": "Number",
+            "away": "Number"
+          }
+        }
+      }
+    }
+  }
+  

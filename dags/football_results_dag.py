@@ -69,8 +69,8 @@ def football_results_dag():
         file_path = os.path.join(saving_path, f"results_{desired_date}.csv")
         df.to_csv(file_path, index=False)
         logger.info(f"Data saved to {file_path}")
-        
-
+        return file_path
+    
     data_json = get_json()
     events = get_events(data_json)
     save_to_csv(events)
