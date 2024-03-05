@@ -11,13 +11,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+
 class ResultScraper:
-    def __init__(self, saving_path, start_date = None, end_date = datetime.now().strftime("%Y-%m-%d")):
+    def __init__(self):
         self.url = "https://api.sofascore.com/api/v1/sport/football/scheduled-events/{}"
-        if start_date:
-            self.start_date = datetime.strptime(start_date, "%Y-%m-%d")
-        self.end_date = datetime.strptime(end_date, "%Y-%m-%d")
-        self.saving_path = saving_path
 
     def get_json(self, desired_date):
         try:
@@ -29,7 +26,8 @@ class ResultScraper:
             logger.error(f"Error while getting data! check your internet connection")
         return response.json()
     
-    def get_events(self, json_data):
+
+def get_events(json_data):
         events = json_data['events']
         data = []
         for event in events:
@@ -57,34 +55,23 @@ class ResultScraper:
                 logger.error(f"Error while extracting data: {e}")
         return data
     
-    def save_to_csv(self, data, desired_date):
-        df = pd.DataFrame(
-            data,
-            columns=[
-                "id", "startTimestamp", "season", "country",
-                "tournament", "round", "home_team",
-                "away_team", "home_score", "away_score",
-                "winner_code", "home_country", "away_country",
-                "is_homeTeam_national", "is_awayTeam_national"
-            ]
-        )
-        df["home_score"] = df["home_score"].astype("Int64")
-        df["away_score"] = df["away_score"].astype("Int64")
-        file_path = os.path.join(self.saving_path, f"results_{desired_date}.csv")
-        df.to_csv(file_path, index=False)
-        logger.info(f"Data saved to {file_path}")
 
-    def scrape_results(self):
-        date = self.start_date
-        if not self.start_date:
-            date = self.end_date
-        while date <= self.end_date:
-            str_date = date.strftime("%Y-%m-%d")
-            logger.info(f"Getting data for {str_date} ...")
-            json_data = self.get_json(str_date)
-            events = self.get_events(json_data)
-            self.save_to_csv(events, str_date)
-            date += timedelta(days=1)
-        logger.info("Done!")
+def save_to_csv(data, date, saving_path):
+    df = pd.DataFrame(
+        data,
+        columns=[
+            "id", "startTimestamp", "season", "country",
+            "tournament", "round", "home_team",
+            "away_team", "home_score", "away_score",
+            "winner_code", "home_country", "away_country",
+            "is_homeTeam_national", "is_awayTeam_national"
+        ]
+    )
+    df["home_score"] = df["home_score"].astype("Int64")
+    df["away_score"] = df["away_score"].astype("Int64")
+    file_path = os.path.join(saving_path, f"results_{date}.csv")
+    df.to_csv(file_path, index=False)
+    logger.info(f"Data saved to {file_path}")
+    return file_path
 
     
