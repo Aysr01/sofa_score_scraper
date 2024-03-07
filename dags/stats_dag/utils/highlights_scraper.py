@@ -27,7 +27,7 @@ class HighlightsScraper():
     def extract_highlights(self, data):
         highlights = {}
         try:
-            _data = data["incidentList"]
+            _data = data["incidents"]
         except KeyError:
             logger.error("There is no data to extract highlights from! Maybe the match doesn't start yet.s")
             return None
