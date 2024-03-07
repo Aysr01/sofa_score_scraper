@@ -21,9 +21,10 @@ class ResultScraper:
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
             }
             response = requests.get(self.url.format(desired_date), headers=headers)
+            json_data = response.json()
         except Exception as e:
-            logger.error(f"Error while getting data! check your internet connection")
-        return response.json()
+            raise Exception(f"Error while getting data: {e}")
+        return json_data
     
 
 def get_events(json_data):

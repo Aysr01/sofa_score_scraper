@@ -1,4 +1,4 @@
-test_sofascore_scraper
+dags/test_stats_dag
 scraped_data/*.csv
 statistics.json
 scripts/credentials.json

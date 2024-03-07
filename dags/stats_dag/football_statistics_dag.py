@@ -48,12 +48,12 @@ def football_results_dag():
         stats_scraper = StatsScraper()
         matches_statistics = []
         for match in desired_data:
-            try:
-                match_stats = stats_scraper.get_stats(match["id"])
-            except Exception as e:
+            match_stats = stats_scraper.get_stats(match["id"])
+            if match_stats is None:
                 logger.error(
-                             "Error getting highlights for match {} in competition {}: {}".format(match["id"], match["tournament"], e)
-                             )
+                    ("Error while getting statistics for match {}-{} in {}"
+                    .format(match["home_team"], match["away_team"], match["tournament"]))
+                )
                 match_stats = None
             else:
                 matches_statistics.append({"statistics": match_stats, "id": match["id"]})
@@ -64,29 +64,29 @@ def football_results_dag():
         highlights_scraper = HighlightsScraper()
         matches_highlights = []
         for match in desired_data:
-            try:
-                match_highlight = highlights_scraper.get_highlights(match["id"])
-            except Exception as e:
+            match_highlight = highlights_scraper.get_highlights(match["id"])
+            if match_highlight is None:
                 logger.error(
-                    "Error getting highlights for match {} in competition {}: {}".format(match["id"], match["tournament"], e)
+                    ("Error while getting highlights for match {}-{} in {}"
+                    .format(match["home_team"], match["away_team"], match["tournament"]))
                 )
-                match_stats = None
+                match_highlight = None
             else:
-                matches_highlights.append({"statistics": match_highlight, "id": match["id"]})
+                matches_highlights.append({"highlights": match_highlight, "id": match["id"]})
         return matches_highlights
     
     
     @task(task_id='prepare_to_load')
     def prepare_to_load(desired_data, matches_statistics, matches_highlights, **context):
         ds = context['ds']
-        for match_stat in matches_statistics:
-            for match in desired_data:
-                if match_stat["id"] == match["id"]:
-                    match["statistics"] = match_stat["statistics"]
-        for match_highlight in matches_highlights:
-            for match in desired_data:
-                if match_highlight["id"] == match["id"]:
-                    match["highlights"] = match_stat["highlights"]
+        kv_data = {"statistics": matches_statistics, "highlights": matches_highlights}
+        for k, v in kv_data.items():
+            for match_info in v:
+                for match in desired_data:
+                    if match_info["id"] == match["id"]:
+                        match[k] = match_info
+                        break
+        # Save to json
         with open(f'/tmp/football_stats_{ds}.jsonl', 'w') as file:
             file.write(json.dumps(desired_data))
     
