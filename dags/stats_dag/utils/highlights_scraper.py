@@ -26,26 +26,31 @@ class HighlightsScraper():
     
     def extract_highlights(self, data):
         highlights = {}
-        for item in data.get("incidents", []):
+        try:
+            _data = data["incidentList"]
+        except KeyError:
+            logger.error("There is no data to extract highlights from! Maybe the match doesn't start yet.s")
+            return None
+        for item in _data:
             incident_type = item.get("incidentType")
             if incident_type == "goal":
                 assist_data = item.get("assist1")
                 assist = None
                 if assist_data:
                     assist = {
-                        "name": assist_data.get("name"),
-                        "position": assist_data.get("position"),
-                        "jerseyNumber": assist_data.get("jerseyNumber")
+                        "name": assist_data.get("name", None),
+                        "position": assist_data.get("position", None),
+                        "jerseyNumber": assist_data.get("jerseyNumber", None)  
                     }
 
                 goal = {
                     "homeScore": item.get("homeScore"),
                     "awayScore": item.get("awayScore"),
-                    "time": item.get("time"),
+                    "time": item.get("time", None),
                     "isHome": item.get("isHome"),
                     "player": {
-                        "name": item["player"].get("name"),
-                        "position": item["player"].get("position"),
+                        "name": item["player"].get("name", None),
+                        "position": item["player"].get("position", None),
                         "jerseyNumber": item["player"].get("jerseyNumber", None)  
                     },
                     "type": item.get("incidentClass"),
@@ -55,16 +60,16 @@ class HighlightsScraper():
 
             elif incident_type == "card":
                 card = {
-                    "time": item.get("time"),
+                    "time": item.get("time", None),
                     "isHome": item.get("isHome"),
                     "player": {
-                        "name": item["player"].get("name"),
-                        "position": item["player"].get("position"),
+                        "name": item["player"].get("name", None),
+                        "position": item["player"].get("position", None),
                         "jerseyNumber": item["player"].get("jerseyNumber", None)  
                     },
                     "type": item.get("incidentClass"),
-                    "rescinded": item.get("rescinded"),
-                    "reason": item.get("reason")
+                    "rescinded": item.get("rescinded", None),
+                    "reason": item.get("reason", None)
                 }
                 highlights.setdefault(incident_type, []).append(card)
 
@@ -73,13 +78,13 @@ class HighlightsScraper():
                     "time": item.get("time"),
                     "isHome": item.get("isHome"),
                     "playerIn": {
-                        "name": item["playerIn"].get("name"),
-                        "position": item["playerIn"].get("position"),
+                        "name": item["playerIn"].get("name", None),
+                        "position": item["playerIn"].get("position", None),
                         "jerseyNumber": item["playerIn"].get("jerseyNumber", None)  
                     },
                     "playerOut": {
-                        "name": item["playerOut"].get("name"),
-                        "position": item["playerOut"].get("position"),
+                        "name": item["playerOut"].get("name", None),
+                        "position": item["playerOut"].get("position", None),
                         "jerseyNumber": item["playerOut"].get("jerseyNumber", None)  
                     },
                     "type": item.get("incidentClass")
@@ -88,23 +93,23 @@ class HighlightsScraper():
 
             elif incident_type == "penalty":
                 penalty = {
-                    "time": item.get("time"),
+                    "time": item.get("time", None),
                     "isHome": item.get("isHome"),
-                    "sequence": item.get("sequence"),
+                    "sequence": item.get("sequence", None),
                     "player": {
-                        "name": item["player"].get("name"),
-                        "position": item["player"].get("position"),
+                        "name": item["player"].get("name", None),
+                        "position": item["player"].get("position", None),
                         "jerseyNumber": item["player"].get("jerseyNumber", None)  
                     },
-                    "state": item.get("state"),
-                    "reason": item.get("reason")
+                    "state": item.get("state", None),
+                    "reason": item.get("reason", None)
                 }
                 highlights.setdefault(incident_type, []).append(penalty)
 
             elif incident_type == "injuryTime":
                 injury_time = {
-                    "time": item.get("time"),
-                    "length": item.get("length")
+                    "time": item.get("time", None),
+                    "length": item.get("length", None)
                 }
                 highlights.setdefault(incident_type, []).append(injury_time)
         return highlights
