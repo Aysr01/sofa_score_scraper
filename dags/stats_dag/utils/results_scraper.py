@@ -1,7 +1,6 @@
 import requests
 import os
-import pandas as pd
-from datetime import datetime, timedelta
+import json
 import logging
 
 
@@ -33,44 +32,32 @@ def get_events(json_data):
         for event in events:
             try:
                 data.append(
-                    (   
-                        event["id"],
-                        event["startTimestamp"],
-                        event["season"]["year"],
-                        event["tournament"]["category"]["name"],
-                        event["tournament"]["name"],
-                        event.get("roundInfo", {"round": None})["round"],
-                        event['homeTeam']['name'],
-                        event['awayTeam']['name'],
-                        event['homeScore'].get('current', None),
-                        event['awayScore'].get('current', None),
-                        event.get("winnerCode", None),
-                        event['homeTeam']["country"].get("name", None),
-                        event['awayTeam']["country"].get("name", None),
-                        event["homeTeam"]["national"],
-                        event["awayTeam"]["national"],
-                    )
+                    {   
+                        "id": event["id"],
+                        "startTimestamp": event["startTimestamp"],
+                        "season": event["season"]["year"],
+                        "country": event["tournament"]["category"]["name"],
+                        "tournament": event["tournament"]["name"],
+                        "round": event.get("roundInfo", {"round": None})["round"],
+                        "home_team": event['homeTeam']['name'],
+                        "away_team": event['awayTeam']['name'],
+                        "home_score": event['homeScore'].get('current', None),
+                        "away_score": event['awayScore'].get('current', None),
+                        "winner_code": event.get("winnerCode", None),
+                        "home_country": event['homeTeam']["country"].get("name", None),
+                        "away_country": event['awayTeam']["country"].get("name", None),
+                        "is_homeTeam_national": event["homeTeam"]["national"],
+                        "is_awayTeam_national": event["awayTeam"]["national"],
+                    }
                 )
             except Exception as e:
                 logger.error(f"Error while extracting data: {e}")
         return data
     
 
-def save_to_csv(data, date, saving_path):
-    df = pd.DataFrame(
-        data,
-        columns=[
-            "id", "startTimestamp", "season", "country",
-            "tournament", "round", "home_team",
-            "away_team", "home_score", "away_score",
-            "winner_code", "home_country", "away_country",
-            "is_homeTeam_national", "is_awayTeam_national"
-        ]
-    )
-    df["home_score"] = df["home_score"].astype("Int64")
-    df["away_score"] = df["away_score"].astype("Int64")
-    file_path = os.path.join(saving_path, f"results_{date}.csv")
-    df.to_csv(file_path, index=False)
+def save_to_json(data, date, saving_path):
+    file_path = os.path.join(saving_path, f"results_{date}.json")
+    json.dump(data, open(file_path, "w"))
     logger.info(f"Data saved to {file_path}")
     return file_path
 

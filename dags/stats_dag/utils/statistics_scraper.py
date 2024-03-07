@@ -28,7 +28,7 @@ class StatsScraper():
     def extract_stats(self, stats_data):
         stats = {}
         for period_data in stats_data:
-            groups = period_data["groups"]  # Stats assigned to a specific group in sofascore
+            groups = period_data["groups"] 
             period_stats = {}
             for stat_group in groups:
                 group_stats = {}
@@ -46,7 +46,8 @@ class StatsScraper():
     def get_stats(self, match_id):
         stats_response = self.get_match_data(match_id)
         if stats_response.status_code != 200:
-            logger.error("Page not found, maybe the match doesn't start yet.\n"\
+            logger.error(
+                         "Page not found, maybe the match didn't start yet.\n"\
                          "This is the url of the last sent request: {}".format(self.url)
                          )
             return None

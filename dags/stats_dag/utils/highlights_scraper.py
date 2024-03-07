@@ -117,13 +117,15 @@ class HighlightsScraper():
     def get_highlights(self, match_id):
         incidents_response = self.get_incidents(match_id)
         if incidents_response.status_code != 200:
-            logger.error("Page not found, maybe the match doesn't start yet.\n"\
+            logger.error(
+                         "Page not found, maybe the match doesn't start yet.\n"\
                          "This is the url of the last sent request: {}".format(self.url)
                          )
             return None
         incidents_json = incidents_response.json()
         extracted_highlights = self.extract_highlights(incidents_json)
         return extracted_highlights
+    
 if __name__ == "__main__":
     scraper = HighlightsScraper()
     match_id = 12049873

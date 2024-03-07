@@ -1,3 +1,4 @@
 test_sofascore_scraper
 scraped_data/*.csv
 statistics.json
+scripts/credentials.json
