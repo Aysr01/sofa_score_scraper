@@ -1,520 +1,2210 @@
-{
-    "timestamp": "String",
-    "season": "String",
-    "country": "String",
-    "tournament": "String",
-    "round": "String",
-    "matchId": "String",
-    "homeTeam": "String",
-    "awayTeam": "String",
-    "homeScore": "Number",
-    "awayScore": "Number",
-    "homeTeamCountry": "String",
-    "awayTeamCountry": "String",
-    "is_homeTeam_National": "Boolean",
-    "is_awayTeam_National": "Boolean",
-    "winner_code": "Number",
-    "highlights": {
-      "goal": [
-        {
-          "homeScore": "Number",
-          "awayScore": "Number",
-          "time": "String",
-          "isHome": "Boolean",
-          "player": {
-            "name": "String",
-            "team": "String",
-            "position": "String",
-            "jerseyNumber": "Number"
+[
+  {
+    "mode": "NULLABLE",
+    "name": "id",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "startTimestamp",
+    "type": "TIMESTAMP"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "season",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "country",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "tournament",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "round",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "home_team",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "away_team",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "home_score",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "away_score",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "winner_code",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "home_country",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "away_country",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "is_homeTeam_national",
+    "type": "BOOLEAN"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "is_awayTeam_national",
+    "type": "BOOLEAN"
+  },
+  {
+    "fields": [
+      {
+        "fields": [
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "expected_goals",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "expected",
+            "type": "RECORD"
           },
-          "team": "String",
-          "type": "String",
-          "assist": {
-            "name": "String",
-            "team": "String",
-            "position": "String",
-            "jerseyNumber": "Number"
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "ball_possession",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "possession",
+            "type": "RECORD"
+          },
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "total_shots",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "shots_on_target",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "shots_off_target",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "blocked_shots",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "shots",
+            "type": "RECORD"
+          },
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "corner_kicks",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "offsides",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "fouls",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "yellow_cards",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "free_kicks",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "throw-ins",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "goal_kicks",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "red_cards",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "tvdata",
+            "type": "RECORD"
+          },
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "big_chances",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "big_chances_missed",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "counter_attacks",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "counter_attack_shots",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "shots_inside_box",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "shots_outside_box",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "goalkeeper_saves",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "goals_prevented",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "hit_woodwork",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "counter_attack_goals",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "shots extra",
+            "type": "RECORD"
+          },
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "passes",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "accurate_passes",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "long_balls",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "crosses",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "passes",
+            "type": "RECORD"
+          },
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "dribbles",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "possession_lost",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "duels_won",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "aerials_won",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "duels",
+            "type": "RECORD"
+          },
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "tackles",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "interceptions",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "clearances",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "defending",
+            "type": "RECORD"
           }
-        }
-      ],
-      "Card": [
-        {
-          "time": "String",
-          "isHome": "Boolean",
-          "player": {
-            "name": "String",
-            "team": "String",
-            "position": "String",
-            "jerseyNumber": "Number"
-          },
-          "type": "String",
-          "rescinded": "Boolean",
-          "reason": "String"
-        }
-      ],
-      "substitution": [
-        {
-          "time": "String",
-          "isHome": "Boolean",
-          "playerIn": {
-            "name": "String",
-            "team": "String",
-            "position": "String",
-            "jerseyNumber": "Number"
-          },
-          "playerOut": {
-            "name": "String",
-            "team": "String",
-            "position": "String",
-            "jerseyNumber": "Number"
-          },
-          "type": "String"
-        }
-      ],
-      "penaltyShootout": [
-        {
-          "homeScore": "Number",
-          "awayScore": "Number",
-          "isHome": "Boolean",
-          "sequence": "Number",
-          "player": {
-            "name": "String",
-            "team": "String",
-            "position": "String",
-            "jerseyNumber": "Number"
-          },
-          "state": "String",
-          "reason": "String"
-        }
-      ],
-      "injuryTime": [
-        {
-          "time": "String",
-          "length": "String"
-        }
-      ]
-    },
-    "statistics": {
-      "all": {
-        "possession": {
-          "home": "Number",
-          "away": "Number"
-        },
-        "shots": {
-          "Total_shots": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Shots_on_target": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Shots_off_target": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Blocked_shots": {
-            "home": "Number",
-            "away": "Number"
-          }
-        },
-        "TVData": {
-          "Corner_kicks": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Offsides": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Fouls": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Free_kicks": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Throw-ins": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Goal_kicks": {
-            "home": "Number",
-            "away": "Number"
-          }
-        },
-        "Shots_Extra": {
-          "Big_chances": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Big_chances_missed": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Counter_attacks": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Counter_attack_shots": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Counter_attack_goals": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Shots_inside_box": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Shots_outside_box": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Goalkeeper_saves": {
-            "home": "Number",
-            "away": "Number"
-          }
-        },
-        "Passes": {
-          "Passes": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Accurate_passes": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Long_balls": {
-            "home": "Number",
-            "away": "Number",
-            "homeTotal": "Number",
-            "awayTotal": "Number"
-          },
-          "Crosses": {
-            "home": "Number",
-            "away": "Number",
-            "homeTotal": "Number",
-            "awayTotal": "Number"
-          }
-        },
-        "Duels": {
-          "Dribbles": {
-            "home": "Number",
-            "away": "Number",
-            "homeTotal": "Number",
-            "awayTotal": "Number"
-          },
-          "Possession_lost": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Duels_won": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Aerials_won": {
-            "home": "Number",
-            "away": "Number"
-          }
-        },
-        "Defending": {
-          "Tackles": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Interceptions": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Clearances": {
-            "home": "Number",
-            "away": "Number"
-          }
-        }
+        ],
+        "mode": "NULLABLE",
+        "name": "ALL",
+        "type": "RECORD"
       },
-      "1ST": {
-        "possession": {
-          "home": "Number",
-          "away": "Number"
-        },
-        "shots": {
-          "Total_shots": {
-            "home": "Number",
-            "away": "Number"
+      {
+        "fields": [
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "expected_goals",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "expected",
+            "type": "RECORD"
           },
-          "Shots_on_target": {
-            "home": "Number",
-            "away": "Number"
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "ball_possession",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "possession",
+            "type": "RECORD"
           },
-          "Shots_off_target": {
-            "home": "Number",
-            "away": "Number"
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "total_shots",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "shots_on_target",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "shots_off_target",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "blocked_shots",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "shots",
+            "type": "RECORD"
           },
-          "Blocked_shots": {
-            "home": "Number",
-            "away": "Number"
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "corner_kicks",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "offsides",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "yellow_cards",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "free_kicks",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "throw-ins",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "goal_kicks",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "red_cards",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "tvdata",
+            "type": "RECORD"
+          },
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "big_chances",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "big_chances_missed",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "counter_attacks",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "counter_attack_shots",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "shots_inside_box",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "shots_outside_box",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "goalkeeper_saves",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "hit_woodwork",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "counter_attack_goals",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "shots extra",
+            "type": "RECORD"
+          },
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "passes",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "accurate_passes",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "long_balls",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "crosses",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "passes",
+            "type": "RECORD"
+          },
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "dribbles",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "possession_lost",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "duels_won",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "aerials_won",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "duels",
+            "type": "RECORD"
+          },
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "tackles",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "interceptions",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "clearances",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "defending",
+            "type": "RECORD"
           }
-        },
-        "TVData": {
-          "Corner_kicks": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Offsides": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Fouls": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Free_kicks": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Throw-ins": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Goal_kicks": {
-            "home": "Number",
-            "away": "Number"
-          }
-        },
-        "Shots_Extra": {
-          "Big_chances": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Big_chances_missed": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Counter_attacks": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Counter_attack_shots": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Counter_attack_goals": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Shots_inside_box": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Shots_outside_box": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Goalkeeper_saves": {
-            "home": "Number",
-            "away": "Number"
-          }
-        },
-        "Passes": {
-          "Passes": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Accurate_passes": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Long_balls": {
-            "home": "Number",
-            "away": "Number",
-            "homeTotal": "Number",
-            "awayTotal": "Number"
-          },
-          "Crosses": {
-            "home": "Number",
-            "away": "Number",
-            "homeTotal": "Number",
-            "awayTotal": "Number"
-          }
-        },
-        "Duels": {
-          "Dribbles": {
-            "home": "Number",
-            "away": "Number",
-            "homeTotal": "Number",
-            "awayTotal": "Number"
-          },
-          "Possession_lost": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Duels_won": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Aerials_won": {
-            "home": "Number",
-            "away": "Number"
-          }
-        },
-        "Defending": {
-          "Tackles": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Interceptions": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Clearances": {
-            "home": "Number",
-            "away": "Number"
-          }
-        }
+        ],
+        "mode": "NULLABLE",
+        "name": "1ST",
+        "type": "RECORD"
       },
-      "2ND": {
-        "possession": {
-          "home": "Number",
-          "away": "Number"
-        },
-        "shots": {
-          "Total_shots": {
-            "home": "Number",
-            "away": "Number"
+      {
+        "fields": [
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "expected_goals",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "expected",
+            "type": "RECORD"
           },
-          "Shots_on_target": {
-            "home": "Number",
-            "away": "Number"
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "ball_possession",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "possession",
+            "type": "RECORD"
           },
-          "Shots_off_target": {
-            "home": "Number",
-            "away": "Number"
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "total_shots",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "shots_on_target",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "shots_off_target",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "blocked_shots",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "shots",
+            "type": "RECORD"
           },
-          "Blocked_shots": {
-            "home": "Number",
-            "away": "Number"
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "corner_kicks",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "offsides",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "yellow_cards",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "free_kicks",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "throw-ins",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "goal_kicks",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "red_cards",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "tvdata",
+            "type": "RECORD"
+          },
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "big_chances",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "big_chances_missed",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "counter_attacks",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "counter_attack_shots",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "shots_inside_box",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "shots_outside_box",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "goalkeeper_saves",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "hit_woodwork",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "counter_attack_goals",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "shots extra",
+            "type": "RECORD"
+          },
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "passes",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "accurate_passes",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "long_balls",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "crosses",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "passes",
+            "type": "RECORD"
+          },
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "dribbles",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "possession_lost",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "duels_won",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "aerials_won",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "duels",
+            "type": "RECORD"
+          },
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "tackles",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "interceptions",
+                "type": "RECORD"
+              },
+              {
+                "fields": [
+                  {
+                    "mode": "NULLABLE",
+                    "name": "home",
+                    "type": "INTEGER"
+                  },
+                  {
+                    "mode": "NULLABLE",
+                    "name": "away",
+                    "type": "INTEGER"
+                  }
+                ],
+                "mode": "NULLABLE",
+                "name": "clearances",
+                "type": "RECORD"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "defending",
+            "type": "RECORD"
           }
-        },
-        "TVData": {
-          "Corner_kicks": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Offsides": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Fouls": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Free_kicks": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Throw-ins": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Goal_kicks": {
-            "home": "Number",
-            "away": "Number"
-          }
-        },
-        "Shots_Extra": {
-          "Big_chances": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Big_chances_missed": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Counter_attacks": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Counter_attack_shots": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Counter_attack_goals": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Shots_inside_box": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Shots_outside_box": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Goalkeeper_saves": {
-            "home": "Number",
-            "away": "Number"
-          }
-        },
-        "Passes": {
-          "Passes": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Accurate_passes": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Long_balls": {
-            "home": "Number",
-            "away": "Number",
-            "homeTotal": "Number",
-            "awayTotal": "Number"
-          },
-          "Crosses": {
-            "home": "Number",
-            "away": "Number",
-            "homeTotal": "Number",
-            "awayTotal": "Number"
-          }
-        },
-        "Duels": {
-          "Dribbles": {
-            "home": "Number",
-            "away": "Number",
-            "homeTotal": "Number",
-            "awayTotal": "Number"
-          },
-          "Possession_lost": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Duels_won": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Aerials_won": {
-            "home": "Number",
-            "away": "Number"
-          }
-        },
-        "Defending": {
-          "Tackles": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Interceptions": {
-            "home": "Number",
-            "away": "Number"
-          },
-          "Clearances": {
-            "home": "Number",
-            "away": "Number"
-          }
-        }
+        ],
+        "mode": "NULLABLE",
+        "name": "2ND",
+        "type": "RECORD"
       }
-    }
+    ],
+    "mode": "NULLABLE",
+    "name": "statistics",
+    "type": "RECORD"
+  },
+  {
+    "fields": [
+      {
+        "fields": [
+          {
+            "mode": "NULLABLE",
+            "name": "time",
+            "type": "INTEGER"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "length",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "REPEATED",
+        "name": "injuryTime",
+        "type": "RECORD"
+      },
+      {
+        "fields": [
+          {
+            "mode": "NULLABLE",
+            "name": "time",
+            "type": "INTEGER"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "isHome",
+            "type": "BOOLEAN"
+          },
+          {
+            "fields": [
+              {
+                "mode": "NULLABLE",
+                "name": "name",
+                "type": "STRING"
+              },
+              {
+                "mode": "NULLABLE",
+                "name": "position",
+                "type": "STRING"
+              },
+              {
+                "mode": "NULLABLE",
+                "name": "jerseyNumber",
+                "type": "INTEGER"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "playerIn",
+            "type": "RECORD"
+          },
+          {
+            "fields": [
+              {
+                "mode": "NULLABLE",
+                "name": "name",
+                "type": "STRING"
+              },
+              {
+                "mode": "NULLABLE",
+                "name": "position",
+                "type": "STRING"
+              },
+              {
+                "mode": "NULLABLE",
+                "name": "jerseyNumber",
+                "type": "INTEGER"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "playerOut",
+            "type": "RECORD"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "type",
+            "type": "STRING"
+          }
+        ],
+        "mode": "REPEATED",
+        "name": "substitution",
+        "type": "RECORD"
+      },
+      {
+        "fields": [
+          {
+            "mode": "NULLABLE",
+            "name": "time",
+            "type": "INTEGER"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "isHome",
+            "type": "BOOLEAN"
+          },
+          {
+            "fields": [
+              {
+                "mode": "NULLABLE",
+                "name": "name",
+                "type": "STRING"
+              },
+              {
+                "mode": "NULLABLE",
+                "name": "position",
+                "type": "STRING"
+              },
+              {
+                "mode": "NULLABLE",
+                "name": "jerseyNumber",
+                "type": "INTEGER"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "player",
+            "type": "RECORD"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "type",
+            "type": "STRING"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "rescinded",
+            "type": "BOOLEAN"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "reason",
+            "type": "STRING"
+          }
+        ],
+        "mode": "REPEATED",
+        "name": "card",
+        "type": "RECORD"
+      },
+      {
+        "fields": [
+          {
+            "mode": "NULLABLE",
+            "name": "homeScore",
+            "type": "INTEGER"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "awayScore",
+            "type": "INTEGER"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "time",
+            "type": "INTEGER"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "isHome",
+            "type": "BOOLEAN"
+          },
+          {
+            "fields": [
+              {
+                "mode": "NULLABLE",
+                "name": "name",
+                "type": "STRING"
+              },
+              {
+                "mode": "NULLABLE",
+                "name": "position",
+                "type": "STRING"
+              },
+              {
+                "mode": "NULLABLE",
+                "name": "jerseyNumber",
+                "type": "INTEGER"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "player",
+            "type": "RECORD"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "type",
+            "type": "STRING"
+          },
+          {
+            "fields": [
+              {
+                "mode": "NULLABLE",
+                "name": "name",
+                "type": "STRING"
+              },
+              {
+                "mode": "NULLABLE",
+                "name": "position",
+                "type": "STRING"
+              },
+              {
+                "mode": "NULLABLE",
+                "name": "jerseyNumber",
+                "type": "INTEGER"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "assist",
+            "type": "RECORD"
+          }
+        ],
+        "mode": "REPEATED",
+        "name": "goal",
+        "type": "RECORD"
+      }
+    ],
+    "mode": "NULLABLE",
+    "name": "highlights",
+    "type": "RECORD"
   }
-  
+]

@@ -8,6 +8,7 @@ from utils.settings import DESIRED_COUNTRIES
 from airflow.decorators import dag, task
 # from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertTableOperator
 from airflow.operators.dummy import DummyOperator
+from custom_operators.bq_operator import BigQueryOperator
 from datetime import datetime
 import logging
 import json
@@ -64,7 +65,11 @@ def football_results_dag():
         highlights_scraper = HighlightsScraper()
         matches_highlights = []
         for match in desired_data:
-            match_highlight = highlights_scraper.get_highlights(match["id"])
+            try:
+                match_highlight = highlights_scraper.get_highlights(match["id"])
+            except Exception as e:
+                logger.error(f"Error while getting highlights for match {match['home_team']}-{match['away_team']} in {match['tournament']}: {e}")
+                match_highlight = None
             if match_highlight is None:
                 logger.error(
                     ("Error while getting highlights for match {}-{} in {}"
@@ -77,31 +82,22 @@ def football_results_dag():
     
     
     @task(task_id='prepare_to_load')
-    def prepare_to_load(desired_data, matches_statistics, matches_highlights, **context):
-        ds = context['ds']
+    def prepare_to_load(desired_data, matches_statistics, matches_highlights):
         kv_data = {"statistics": matches_statistics, "highlights": matches_highlights}
         for k, v in kv_data.items():
             for match_info in v:
                 for match in desired_data:
                     if match_info["id"] == match["id"]:
-                        match[k] = match_info
+                        match[k] = match_info[k]
                         break
-        # Save to json
-        with open(f'/tmp/football_stats_{ds}.jsonl', 'w') as file:
-            file.write(json.dumps(desired_data))
-    
-    # load_json_data = BigQueryInsertTableOperator(
-    #     task_id='load_json_data',
-    #     table_resource={
-    #         'dataset_id': 'sofa_score',  
-    #         'table_id': 'football_stats',  
-    #     },
-    #     create_disposition='CREATE_IF_NEEDED',
-    #     write_disposition='WRITE_APPEND', 
-    #     source_objects=['/tmp/football_stats_{{ ds }}.jsonl'], 
-    #     source_format='NEWLINE_DELIMITED_JSON',
-    #     schema_update_options=['ALLOW_FIELD_ADDITION']
-    # )
+        # Save to new delimiter json
+        return desired_data
+
+    @task(task_id='load_to_bq')
+    def load_to_bq(prepared_data):
+        bq_client = BigQueryOperator()
+        for data in prepared_data:
+            bq_client.execute([data])
             
     end = DummyOperator(task_id='end')
     
@@ -112,6 +108,7 @@ def football_results_dag():
     data_with_statistics = get_statistics(desired_data)
     data_with_highlights = get_highlights(desired_data)
     prepared_data = prepare_to_load(desired_data, data_with_statistics, data_with_highlights)
-    prepared_data >> end
+    loaded_data = load_to_bq(prepared_data)
+    loaded_data >> end
 
 football_results_dag()

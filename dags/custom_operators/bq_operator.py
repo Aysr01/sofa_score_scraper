@@ -12,20 +12,22 @@ logger = logging.getLogger(__name__)
 
 class BigQueryOperator(BaseOperator):
     def __init__(self, **kwargs):
-        self._table = kwargs.get("table")
-        self._schema = kwargs.get("schema")
-        self._client = None
+        self._project_id = os.environ.get("GCP_PROJECT_ID")
+        self._dataset_id = os.environ.get("BQ_DATASET_ID")
+        self._table_id = os.environ.get("BQ_TABLE_ID")
+        self._table = f"{self._project_id}.{self._dataset_id}.{self._table_id}"
+        self._client = bigquery.Client()
 
     def execute(self, data_dict, **context):
         """
         Returns a BigQuery PEP 249 connection object.
         """
-        client = bigquery.Client()
-        error = client.insert_rows_json(self._table, data_dict)
+        error = self._client.insert_rows_json(self._table, data_dict)
         if error != [] :
+            logger
             logger.error(
                     ("Error while getting highlights for match {}-{} in {} error: {}"
-                    .format(data_dict["home_team"], data_dict["away_team"], data_dict["tournament"]), error[0])
+                    .format(data_dict[0]["home_team"], data_dict[0]["away_team"], data_dict[0]["tournament"], error['errors']))
                 )
 
 
@@ -36,12 +38,8 @@ if __name__ == "__main__":
     dataset_id = os.environ.get("BQ_DATASET_ID")
     table_id = os.environ.get("BQ_TABLE_ID")
     table = f"{project_id}.{dataset_id}.{table_id}"
-    schema = [
-        bigquery.SchemaField("name", "STRING", mode="REQUIRED"),
-        bigquery.SchemaField("age", "INTEGER", mode="REQUIRED"),
-    ]
     data_dict = {"name": "John", "a": 30}
 
 
-    hook = BigQueryOperator(table=table, schema=schema)
+    hook = BigQueryOperator(table=table)
     hook.execute(data_dict)

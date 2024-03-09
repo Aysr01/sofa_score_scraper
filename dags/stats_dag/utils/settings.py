@@ -3,5 +3,4 @@ DESIRED_COUNTRIES = [
     "Spain",
     "Germany",
     "England",
-    "Europe",
 ]

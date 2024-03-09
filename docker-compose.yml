@@ -17,7 +17,7 @@ services:
         - AIRFLOW_WEBSERVER_SECRET_KEY=this_is_a_very_secured_key
         - GCP_PROJECT_ID=skilled-creek-412216
         - BQ_DATASET_ID=sofa_score
-        - BQ_TABLE_ID=foot_statistics
+        - BQ_TABLE_ID=football_results
         - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
       logging:
         options:
@@ -26,14 +26,14 @@ services:
       volumes:
         - ./dags:/opt/airflow/dags
         - ./scripts/entrypoint.sh:/opt/airflow/script/entrypoint.sh
-        - ./credentials/credentials.json:/opt/airflow/credentials/credentials.json
+        - ./credentials/:/opt/airflow/credentials/
         - ./requirements.txt:/opt/airflow/requirements.txt
       ports:
         - "8080:8080"
       healthcheck:
         test: ['CMD-SHELL', "[ -f /opt/airflow/airflow-webserver.pid ]"]
-        interval: 90s
-        timeout: 90s
+        interval: 160s
+        timeout: 160s
         retries: 3
       networks:
         - sscore
@@ -46,7 +46,7 @@ services:
       volumes:
         - ./dags:/opt/airflow/dags
         - ./scripts/entrypoint.sh:/opt/airflow/script/entrypoint.sh
-        - ./credentials/credentials.json:/opt/airflow/credentials/credentials.json
+        - ./credentials/:/opt/airflow/credentials/
         - ./requirements.txt:/opt/airflow/requirements.txt
       environment:
         - LOAD_EX=n
@@ -55,7 +55,7 @@ services:
         - AIRFLOW_WEBSERVER_SECRET_KEY=this_is_a_very_secured_key
         - GCP_PROJECT_ID=skilled-creek-412216
         - BQ_DATASET_ID=sofa_score
-        - BQ_TABLE_ID=foot_statistics
+        - BQ_TABLE_ID=football_results
         - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
       entrypoint: ['/opt/airflow/script/entrypoint.sh']
       command: scheduler

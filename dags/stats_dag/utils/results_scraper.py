@@ -2,7 +2,7 @@ import requests
 import os
 import json
 import logging
-
+import datetime
 
 logging.basicConfig(
     level=logging.INFO,
@@ -35,7 +35,8 @@ def get_events(json_data):
                 data.append(
                     {   
                         "id": event["id"],
-                        "startTimestamp": event["startTimestamp"],
+                        "startTimestamp": (datetime.datetime.fromtimestamp(event["startTimestamp"], tz=datetime.timezone.utc)
+                                           .strftime("%Y-%m-%d %H:%M:%S")),
                         "season": event["season"]["year"],
                         "country": event["tournament"]["category"]["name"],
                         "tournament": event["tournament"]["name"],
@@ -57,6 +58,8 @@ def get_events(json_data):
     
 
 def save_to_json(data, date, saving_path):
+    if not os.path.exists(saving_path):
+        os.makedirs(saving_path)
     file_path = os.path.join(saving_path, f"results_{date}.json")
     json.dump(data, open(file_path, "w"))
     logger.info(f"Data saved to {file_path}")
