@@ -105,8 +105,6 @@ def football_results_dag():
             
     end = DummyOperator(task_id='end')
     
-
-
     
     data_json = get_json_data()
     events = get_events_data(data_json)

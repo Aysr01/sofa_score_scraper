@@ -1,4 +1,4 @@
-dags/test_stats_dag
+dags/test_*
 scraped_data/*.csv
 statistics.json
-scripts/credentials.json
+credentials/

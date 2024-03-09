@@ -15,7 +15,10 @@ services:
         - EXECUTOR=Sequential
         - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
         - AIRFLOW_WEBSERVER_SECRET_KEY=this_is_a_very_secured_key
-        - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/scripts/credentials.json
+        - GCP_PROJECT_ID=skilled-creek-412216
+        - BQ_DATASET_ID=sofa_score
+        - BQ_TABLE_ID=foot_statistics
+        - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
       logging:
         options:
           max-size: 10m
@@ -23,6 +26,7 @@ services:
       volumes:
         - ./dags:/opt/airflow/dags
         - ./scripts/entrypoint.sh:/opt/airflow/script/entrypoint.sh
+        - ./credentials/credentials.json:/opt/airflow/credentials/credentials.json
         - ./requirements.txt:/opt/airflow/requirements.txt
       ports:
         - "8080:8080"
@@ -42,13 +46,17 @@ services:
       volumes:
         - ./dags:/opt/airflow/dags
         - ./scripts/entrypoint.sh:/opt/airflow/script/entrypoint.sh
+        - ./credentials/credentials.json:/opt/airflow/credentials/credentials.json
         - ./requirements.txt:/opt/airflow/requirements.txt
       environment:
         - LOAD_EX=n
         - EXECUTOR=Sequential
         - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
         - AIRFLOW_WEBSERVER_SECRET_KEY=this_is_a_very_secured_key
-        - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/scripts/credentials.json
+        - GCP_PROJECT_ID=skilled-creek-412216
+        - BQ_DATASET_ID=sofa_score
+        - BQ_TABLE_ID=foot_statistics
+        - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
       entrypoint: ['/opt/airflow/script/entrypoint.sh']
       command: scheduler
       networks:
