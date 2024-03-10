@@ -15,8 +15,8 @@ services:
         - EXECUTOR=Sequential
         - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
         - AIRFLOW_WEBSERVER_SECRET_KEY=this_is_a_very_secured_key
-        - GCP_PROJECT_ID=skilled-creek-412216
-        - BQ_DATASET_ID=sofa_score
+        - GCP_PROJECT_ID=foot-analyse
+        - BQ_DATASET_ID=foot_data
         - BQ_TABLE_ID=football_results
         - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
       logging:
@@ -53,8 +53,8 @@ services:
         - EXECUTOR=Sequential
         - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
         - AIRFLOW_WEBSERVER_SECRET_KEY=this_is_a_very_secured_key
-        - GCP_PROJECT_ID=skilled-creek-412216
-        - BQ_DATASET_ID=sofa_score
+        - GCP_PROJECT_ID=foot-analyse
+        - BQ_DATASET_ID=foot_data
         - BQ_TABLE_ID=football_results
         - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
       entrypoint: ['/opt/airflow/script/entrypoint.sh']
