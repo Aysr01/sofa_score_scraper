@@ -37,7 +37,8 @@ def get_json_data(**context):
 @task(task_id='extract_desired_info')
 def extract_desired_info(json_data, **context):
     ds = context["ds"]
-    return get_events(json_data, ds)
+    desired_info = get_events(json_data, ds)
+    context["task_instance"].xcom_push(key="desired_info", value=desired_info)
 
 
 def extract_stats_from_queue():
@@ -65,7 +66,8 @@ def extract_stats_from_queue():
                 matches_statistics.put({"statistics": match_stats, "id": match["id"]})
 
 @task(task_id='fetch_statistics')
-def fetch_statistics(desired_data):
+def fetch_statistics(_, **context):
+    desired_data = context["task_instance"].xcom_pull(task_ids="extract_desired_info", key="desired_info")
     global ids_queue, matches_statistics
     for match in desired_data:
         ids_queue.put(match)
@@ -100,7 +102,8 @@ def extract_highlights_from_queue():
                 matches_highlights.put({"highlights": match_highlights, "id": match["id"]})
 
 @task(task_id='fetch_highlights')
-def fetch_highlights(desired_data):
+def fetch_highlights(_, **context):
+    desired_data = context["task_instance"].xcom_pull(task_ids="extract_desired_info", key="desired_info")
     global ids_queue2, matches_highlights
     for match in desired_data:
         ids_queue2.put(match)
@@ -112,7 +115,8 @@ def fetch_highlights(desired_data):
 
 
 @task(task_id='prepare_to_load')
-def prepare_to_load(desired_data, matches_statistics, matches_highlights):
+def prepare_to_load(matches_statistics, matches_highlights, **context):
+    desired_data = context["task_instance"].xcom_pull(task_ids="extract_desired_info", key="desired_info")
     kv_data = {"statistics": matches_statistics, "highlights": matches_highlights}
     for k, v in kv_data.items():
         for match_info in v:
@@ -144,7 +148,7 @@ def football_results_dag():
     desired_info = extract_desired_info(raw_data_json)
     data_with_statistics = fetch_statistics(desired_info)
     data_with_highlights = fetch_highlights(desired_info)
-    prepared_data = prepare_to_load(desired_info, data_with_statistics, data_with_highlights)
+    prepared_data = prepare_to_load(data_with_statistics, data_with_highlights)
     loaded_data = load_to_bq(prepared_data)
     start >> raw_data_json
     loaded_data >> end

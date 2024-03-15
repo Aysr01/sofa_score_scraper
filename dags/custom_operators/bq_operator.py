@@ -19,15 +19,19 @@ class BigQueryOperator(BaseOperator):
         self._client = bigquery.Client()
 
     def execute(self, data_dict, **context):
-        """
-        Returns a BigQuery PEP 249 connection object.
-        """
         error = self._client.insert_rows_json(self._table, data_dict)
         if error != [] :
-            logger
             logger.error(
-                    ("Error while getting highlights for match {}-{} in {} error: {}"
-                    .format(data_dict[0]["home_team"], data_dict[0]["away_team"], data_dict[0]["tournament"], error['errors']))
+                    "Error while loading data of the match: " \
+                    "https://www.sofascore.com/{}-{}/{}#id:{},tab:details" \
+                    "occured errors: {}"
+                    .format(
+                        data_dict[0]["home_team"].lower().replace(" ", "-"),
+                        data_dict[0]["away_team"].lower().replace(" ", "-"),
+                        data_dict[0]["customId"],
+                        data_dict[0]["id"],
+                        error["errors"]
+                    )
                 )
 
 
