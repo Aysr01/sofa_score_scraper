@@ -2,7 +2,8 @@ import requests
 import os
 import json
 import logging
-import datetime
+from datetime import datetime, timezone
+from .settings import DESIRED_COUNTRIES
 
 logging.basicConfig(
     level=logging.INFO,
@@ -25,36 +26,45 @@ class ResultScraper:
         except Exception as e:
             raise Exception(f"Error while getting data: {e}")
         return json_data
+
     
 
-def get_events(json_data):
+def get_events(json_data, execution_date):
         events = json_data['events']
-        data = []
+        desired_data = []
         for event in events:
             try:
-                data.append(
-                    {   
-                        "id": event["id"],
-                        "startTimestamp": (datetime.datetime.fromtimestamp(event["startTimestamp"], tz=datetime.timezone.utc)
-                                           .strftime("%Y-%m-%d %H:%M:%S")),
-                        "season": event["season"]["year"],
-                        "country": event["tournament"]["category"]["name"],
-                        "tournament": event["tournament"]["name"],
-                        "round": event.get("roundInfo", {"round": None})["round"],
-                        "home_team": event['homeTeam']['name'],
-                        "away_team": event['awayTeam']['name'],
-                        "home_score": event['homeScore'].get('current', None),
-                        "away_score": event['awayScore'].get('current', None),
-                        "winner_code": event.get("winnerCode", None),
-                        "home_country": event['homeTeam']["country"].get("name", None),
-                        "away_country": event['awayTeam']["country"].get("name", None),
-                        "is_homeTeam_national": event["homeTeam"]["national"],
-                        "is_awayTeam_national": event["awayTeam"]["national"],
-                    }
-                )
+                event_country = event["tournament"]["category"]["name"]
+                start_timestamp = (datetime.fromtimestamp(event["startTimestamp"], tz=timezone.utc)
+                                            .strftime("%Y-%m-%d %H:%M:%S"))
+                if (event_country in DESIRED_COUNTRIES) and (start_timestamp > execution_date):
+                    desired_data.append(
+                        {   
+                            "id": event["id"],
+                            "customId": event["customId"],
+                            "startTimestamp": start_timestamp,
+                            "season": event["season"]["year"],
+                            "country": event_country,
+                            "tournament": event["tournament"]["uniqueTournament"]["name"],
+                            "round": event["roundInfo"]["round"],
+                            "home_team": event['homeTeam']['name'],
+                            "away_team": event['awayTeam']['name'],
+                            "home_score": event['homeScore'].get('current', None),
+                            "away_score": event['awayScore'].get('current', None),
+                            "winner_code": event.get("winnerCode", None),
+                            "home_country": event['homeTeam']["country"].get("name", None),
+                            "away_country": event['awayTeam']["country"].get("name", None),
+                            "is_homeTeam_national": event["homeTeam"]["national"],
+                            "is_awayTeam_national": event["awayTeam"]["national"],
+                        }
+                    )
+            except KeyError as e:
+                logger.error(f"Error while extracting data for event: {event}")
+                logger.error(f"KeyError: {e}")
             except Exception as e:
-                logger.error(f"Error while extracting data: {e}")
-        return data
+                logger.error(f"Error while extracting data for event: {event}")
+                logger.error(f"Unexpected error: {e}")
+        return desired_data
     
 
 def save_to_json(data, date, saving_path):

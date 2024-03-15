@@ -27,29 +27,36 @@ class StatsScraper():
     
     def extract_stats(self, stats_data):
         stats = {}
-        for period_data in stats_data:
-            groups = period_data["groups"] 
-            period_stats = {}
-            for stat_group in groups:
-                group_stats = {}
-                for stat in stat_group["statisticsItems"]:
-                    stat_name = stat["name"].lower().replace(" ", "_")
-                    group_stats[stat_name] = {
-                        "home": int(stat["homeValue"]),
-                        "away": int(stat["awayValue"])
-                    }
-                    period_stats[stat_group["groupName"].lower()] = group_stats
-            
-            stats[period_data["period"]] = period_stats
+        try:
+            for period_data in stats_data:
+                # period_data contains stats of first half, second half, or the entire match 
+                groups = period_data["groups"]
+                period_stats = {}
+                for stat_group in groups:
+                    # group of statistics (possession, shots....etc)
+                    group_stats = {}
+                    for stat in stat_group["statisticsItems"]:
+                        # in a single group there is a divers of statistics
+                        # for instance, shots goup include (shots on target, expected goals....)
+                        stat_name = stat["name"].lower().replace(" ", "_")
+                        group_stats[stat_name] = {
+                            "home": int(stat["homeValue"]),
+                            "away": int(stat["awayValue"])
+                        }
+                        period_stats[stat_group["groupName"].lower()] = group_stats
+                
+                stats[period_data["period"]] = period_stats
+        except KeyError as e:
+            logger.error(f"KeyError: {e}")
+            logger.error(f"while processing statistics: {stats_data}")
+        except Exception as e:
+            logger.error(f"Unexpected error: {e}")
+            logger.error(f"while processing statistics: {stats_data}")
         return stats 
     
     def get_stats(self, match_id):
         stats_response = self.get_match_data(match_id)
         if stats_response.status_code != 200:
-            logger.error(
-                         "Page not found, maybe the match didn't start yet.\n"\
-                         "This is the url of the last sent request: {}".format(self.url)
-                         )
             return None
         stats_json = stats_response.json()["statistics"]
         extracted_stats = self.extract_stats(stats_json)
