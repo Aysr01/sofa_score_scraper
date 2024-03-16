@@ -1,5 +1,5 @@
 requests
-apache-airflow-providers-google
-pandas
+google-cloud-storage
+google-cloud-bigquery
 datetime
 psycopg2-binary

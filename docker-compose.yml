@@ -18,6 +18,7 @@ services:
         - GCP_PROJECT_ID=foot-analyse
         - BQ_DATASET_ID=foot_data
         - BQ_TABLE_ID=football_results
+        - BUCKET_ID=football_lake
         - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
       logging:
         options:
@@ -56,6 +57,7 @@ services:
         - GCP_PROJECT_ID=foot-analyse
         - BQ_DATASET_ID=foot_data
         - BQ_TABLE_ID=football_results
+        - BUCKET_ID=football_lake
         - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
       entrypoint: ['/opt/airflow/script/entrypoint.sh']
       command: scheduler

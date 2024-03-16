@@ -35,14 +35,13 @@ def get_events(json_data, execution_date):
         for event in events:
             try:
                 event_country = event["tournament"]["category"]["name"]
-                start_timestamp = (datetime.fromtimestamp(event["startTimestamp"], tz=timezone.utc)
-                                            .strftime("%Y-%m-%d %H:%M:%S"))
-                if (event_country in DESIRED_COUNTRIES) and (start_timestamp > execution_date):
+                start_timestamp = datetime.fromtimestamp(event["startTimestamp"], tz=timezone.utc)
+                if (event_country in DESIRED_COUNTRIES) and (start_timestamp.strftime("%Y-%m-%d") == execution_date):
                     desired_data.append(
                         {   
                             "id": event["id"],
                             "customId": event["customId"],
-                            "startTimestamp": start_timestamp,
+                            "startTimestamp": start_timestamp.strftime("%Y-%m-%d %H:%M:%S"),
                             "season": event["season"]["year"],
                             "country": event_country,
                             "tournament": event["tournament"]["uniqueTournament"]["name"],

@@ -4,8 +4,8 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from utils.results_scraper import ResultScraper, get_events
 from utils.statistics_scraper import StatsScraper
 from utils.highlights_scraper import HighlightsScraper
+from utils.gcs_client import GcsClient
 from airflow.decorators import dag, task
-# from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertTableOperator
 from airflow.operators.dummy import DummyOperator
 from custom_operators.bq_operator import BigQueryOperator
 from datetime import datetime
@@ -28,9 +28,14 @@ matches_highlights = queue.Queue()
 
 @task(task_id='get_json_data')
 def get_json_data(**context):
-    date = context['ds']
-    scraper = ResultScraper()
-    json_data = scraper.get_json(date)
+    execution_date = context['ds']
+    gcs_client = GcsClient()
+    json_data = gcs_client.is_consulted(f"results/{execution_date}.json")
+    if not json_data:
+        logger.info("Getting results..")
+        scraper = ResultScraper()
+        json_data = scraper.get_json(execution_date)
+        gcs_client.upload_data(json_data, f"results/{execution_date}.json")
     return json_data
 
 
@@ -41,7 +46,7 @@ def extract_desired_info(json_data, **context):
     context["task_instance"].xcom_push(key="desired_info", value=desired_info)
 
 
-def extract_stats_from_queue():
+def extract_stats_from_queue(ds):
     global ids_queue, matches_statistics
     stats_scraper = StatsScraper()
     while(True):
@@ -50,20 +55,26 @@ def extract_stats_from_queue():
         except:
             break
         if match:
-            match_stats = stats_scraper.get_stats(match["id"])
-            if match_stats is None:
-                logger.error(
-                    "Error while getting statistics of the match: " \
-                    "https://www.sofascore.com/{}-{}/{}#id:{},tab:details" \
-                    .format(
-                        match["home_team"].lower().replace(" ", "-"),
-                        match["away_team"].lower().replace(" ", "-"),
-                        match["customId"],
-                        match["id"]
+            gcs_client = GcsClient()
+            data_path = "statistics/{}/{}.json".format(ds, match["id"])
+            match_stats = gcs_client.is_consulted(data_path)
+            if not match_stats:
+                match_stats = stats_scraper.get_stats(match["id"])
+                logger.info("Getting Data for match {}".format(match["id"]))
+                if match_stats is None:
+                    logger.error(
+                        "Error while getting statistics of the match: " \
+                        "https://www.sofascore.com/{}-{}/{}#id:{},tab:details" \
+                        .format(
+                            match["home_team"].lower().replace(" ", "-"),
+                            match["away_team"].lower().replace(" ", "-"),
+                            match["customId"],
+                            match["id"]
+                        )
                     )
-                )
-            else:
-                matches_statistics.put({"statistics": match_stats, "id": match["id"]})
+                    return None
+                gcs_client.upload_data(match_stats, data_path)
+            matches_statistics.put({"statistics": match_stats, "id": match["id"]})
 
 @task(task_id='fetch_statistics')
 def fetch_statistics(_, **context):
@@ -74,10 +85,10 @@ def fetch_statistics(_, **context):
     # run ten Threads in parallel
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
         for i in range(10):
-            executor.submit(extract_stats_from_queue)
+            executor.submit(extract_stats_from_queue, context["ds"])
     return list(matches_statistics.queue)
 
-def extract_highlights_from_queue():
+def extract_highlights_from_queue(ds):
     global ids_queue2, matches_highlights
     highlights_scraper = HighlightsScraper()
     while True:
@@ -86,20 +97,26 @@ def extract_highlights_from_queue():
         except:
             break
         if match:
-            match_highlights = highlights_scraper.get_highlights(match["id"])
-            if match_highlights is None:
-                logger.error(
-                    "Error while getting highlights of the match: " \
-                    "https://www.sofascore.com/{}-{}/{}#id:{},tab:details" \
-                    .format(
-                        match["home_team"].lower().replace(" ", "-"),
-                        match["away_team"].lower().replace(" ", "-"),
-                        match["customId"],
-                        match["id"]
+            gcs_client = GcsClient()
+            data_path = "highlights/{}/{}.json".format(ds, match["id"])
+            match_highlights = gcs_client.is_consulted(data_path)
+            if not match_highlights:
+                logger.info("Getting Data for match {}".format(match["id"]))
+                match_highlights = highlights_scraper.get_highlights(match["id"])
+                if match_highlights is None:
+                    logger.error(
+                        "Error while getting highlights of the match: " \
+                        "https://www.sofascore.com/{}-{}/{}#id:{},tab:details" \
+                        .format(
+                            match["home_team"].lower().replace(" ", "-"),
+                            match["away_team"].lower().replace(" ", "-"),
+                            match["customId"],
+                            match["id"]
+                        )
                     )
-                )
-            else:
-                matches_highlights.put({"highlights": match_highlights, "id": match["id"]})
+                    return None 
+                gcs_client.upload_data(match_highlights, data_path)
+            matches_highlights.put({"highlights": match_highlights, "id": match["id"]})
 
 @task(task_id='fetch_highlights')
 def fetch_highlights(_, **context):
@@ -110,7 +127,7 @@ def fetch_highlights(_, **context):
     # run ten Threads in parallel
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
         for i in range(10):
-            executor.submit(extract_highlights_from_queue)
+            executor.submit(extract_highlights_from_queue, context["ds"])
     return list(matches_highlights.queue)
 
 
@@ -135,22 +152,30 @@ def load_to_bq(prepared_data):
 
 
 @dag(
-        dag_id="football_results_dag_v2.0", schedule_interval='@daily',
+        dag_id="football_results_dag_v2.1", schedule_interval='@daily',
         start_date=datetime(2024, 2, 1), catchup=False,
 )
 def football_results_dag():
-
+    # start task (does nothing)
     start = DummyOperator(task_id='start')
-
+    # end task (does nothing)
     end = DummyOperator(task_id='end')
-    
+    #get raw data from Sofascore
     raw_data_json = get_json_data()
+    # extract desired informations from matches
     desired_info = extract_desired_info(raw_data_json)
+    # fetch statistics of a specific match from Sofascore (possession, shots...etc)
     data_with_statistics = fetch_statistics(desired_info)
+    # fetch highlights of a specific match from Sofascore
     data_with_highlights = fetch_highlights(desired_info)
+    # merge statistics, highlights with the corresponding match data
     prepared_data = prepare_to_load(data_with_statistics, data_with_highlights)
+    # load data to BigQuery
     loaded_data = load_to_bq(prepared_data)
+    # start connection
     start >> raw_data_json
+    # end connection
     loaded_data >> end
 
+# start the dag
 football_results_dag()
