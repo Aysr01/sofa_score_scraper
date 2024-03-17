@@ -22,7 +22,7 @@ class StatsScraper():
         try:
             response = requests.get(self.url, headers=headers)
         except Exception as e:
-            logger.error(f"Error while getting data! check your internet connection")
+            logger.error(f"Error while getting data! the following error occured: {e}")
         return response
     
     def extract_stats(self, stats_data):

@@ -3,3 +3,4 @@ scraped_data/*.csv
 statistics.json
 credentials/
 logs/
+.gitingore

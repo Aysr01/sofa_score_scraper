@@ -48,6 +48,7 @@ def get_events(json_data, execution_date):
                             "round": event["roundInfo"]["round"],
                             "home_team": event['homeTeam']['name'],
                             "away_team": event['awayTeam']['name'],
+                            "status": event["status"]["type"],
                             "home_score": event['homeScore'].get('current', None),
                             "away_score": event['awayScore'].get('current', None),
                             "winner_code": event.get("winnerCode", None),

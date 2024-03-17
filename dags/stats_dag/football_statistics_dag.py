@@ -49,19 +49,19 @@ def extract_desired_info(json_data, **context):
 def extract_stats_from_queue(ds):
     global ids_queue, matches_statistics
     stats_scraper = StatsScraper()
+    gcs_client = GcsClient()
     while(True):
         try:
             match = ids_queue.get(timeout=1)
         except:
             break
         if match:
-            gcs_client = GcsClient()
             data_path = "statistics/{}/{}.json".format(ds, match["id"])
             match_stats = gcs_client.is_consulted(data_path)
             if not match_stats:
                 match_stats = stats_scraper.get_stats(match["id"])
                 logger.info("Getting Data for match {}".format(match["id"]))
-                if match_stats is None:
+                if not match_stats:
                     logger.error(
                         "Error while getting statistics of the match: " \
                         "https://www.sofascore.com/{}-{}/{}#id:{},tab:details" \
@@ -91,19 +91,19 @@ def fetch_statistics(_, **context):
 def extract_highlights_from_queue(ds):
     global ids_queue2, matches_highlights
     highlights_scraper = HighlightsScraper()
+    gcs_client = GcsClient()
     while True:
         try:
             match = ids_queue2.get(timeout=1)
         except:
             break
         if match:
-            gcs_client = GcsClient()
             data_path = "highlights/{}/{}.json".format(ds, match["id"])
             match_highlights = gcs_client.is_consulted(data_path)
             if not match_highlights:
                 logger.info("Getting Data for match {}".format(match["id"]))
                 match_highlights = highlights_scraper.get_highlights(match["id"])
-                if match_highlights is None:
+                if not match_highlights:
                     logger.error(
                         "Error while getting highlights of the match: " \
                         "https://www.sofascore.com/{}-{}/{}#id:{},tab:details" \

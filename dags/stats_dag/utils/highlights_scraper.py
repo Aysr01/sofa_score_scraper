@@ -131,8 +131,7 @@ class HighlightsScraper():
         incidents_response = self.get_incidents(match_id)
         if incidents_response is None or incidents_response.status_code != 200:
             logger.error(
-                "Page not found, maybe the match doesn't start yet.\n"
-                "This is the url of the last sent request: {}".format(self.url)
+                "Page not found, maybe the match doesn't start yet"
             )
             return {} 
 
