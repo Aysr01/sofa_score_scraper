@@ -33,7 +33,7 @@ class HighlightsScraper():
             _data = data["incidents"]
         except KeyError:
             logger.error("There is no data to extract highlights from! Maybe the match doesn't start yet.")
-            return highlights  
+            return None  
 
         for item in _data:
             try:
