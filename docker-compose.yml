@@ -20,6 +20,7 @@ services:
         - BQ_TABLE_ID=football_results
         - BUCKET_ID=football_lake
         - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
+        - PROXIES_PATH=/opt/airflow/proxies/valid_proxies.txt
       logging:
         options:
           max-size: 10m
@@ -30,6 +31,7 @@ services:
         - ./credentials/:/opt/airflow/credentials/
         - ./requirements.txt:/opt/airflow/requirements.txt
         - ./logs/:/opt/airflow/logs
+        - ./proxies/valid_proxies.txt:/opt/airflow/proxies/valid_proxies.txt
       ports:
         - "8080:8080"
       healthcheck:
@@ -51,6 +53,7 @@ services:
         - ./credentials/:/opt/airflow/credentials/
         - ./requirements.txt:/opt/airflow/requirements.txt
         - ./logs/:/opt/airflow/logs
+        - ./proxies/valid_proxies.txt:/opt/airflow/proxies/valid_proxies.txt
       environment:
         - LOAD_EX=n
         - EXECUTOR=LocalExecutor
@@ -61,6 +64,7 @@ services:
         - BQ_TABLE_ID=football_results
         - BUCKET_ID=football_lake
         - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
+        - PROXIES_PATH=/opt/airflow/proxies/valid_proxies.txt
       entrypoint: ['/opt/airflow/script/entrypoint.sh']
       command: scheduler
       networks:

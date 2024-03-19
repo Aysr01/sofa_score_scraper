@@ -1,6 +1,8 @@
 import requests
 import logging
 import json
+import os
+import random
 
 logging.basicConfig(
     level=logging.INFO,
@@ -13,6 +15,8 @@ class StatsScraper():
 
     def __init__(self):
         self.base_url = "https://api.sofascore.com/api/v1/event/{}/statistics"
+        with open(os.environ.get("PROXIES_PATH"), "r") as f: 
+            self.proxies = f.read().split("\n")
 
     def get_match_data(self, match_id):
         headers = {
@@ -20,7 +24,12 @@ class StatsScraper():
         }
         self.url = self.base_url.format(match_id)
         try:
-            response = requests.get(self.url, headers=headers)
+            while True:
+                proxy = random.choice(self.proxies)
+                response = requests.get(self.url, headers=headers, proxies={'http': f"http://{proxy}="})
+                if response.status_code == 200:
+                    logger.info(f"scraped data using proxy: {proxy}")
+                    break
         except Exception as e:
             logger.error(f"Error while getting data! the following error occured: {e}")
         return response

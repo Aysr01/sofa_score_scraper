@@ -3,6 +3,7 @@ import os
 import json
 import logging
 from datetime import datetime, timezone
+import random
 from .settings import DESIRED_COUNTRIES
 
 logging.basicConfig(
@@ -15,13 +16,20 @@ logger = logging.getLogger(__name__)
 class ResultScraper:
     def __init__(self):
         self.url = "https://api.sofascore.com/api/v1/sport/football/scheduled-events/{}"
+        with open(os.environ.get("PROXIES_PATH"), "r") as f: 
+            self.proxies = f.read().split("\n")
 
     def get_json(self, desired_date):
         try:
             headers = {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
             }
-            response = requests.get(self.url.format(desired_date), headers=headers)
+            while True:
+                proxy = random.choice(self.proxies)
+                response = requests.get(self.url.format(desired_date), headers=headers, proxies={'http': f"http://{proxy}="})
+                if response.status_code == 200:
+                    logger.info(f"scraped data using proxy: {proxy}")
+                    break
             json_data = response.json()
         except Exception as e:
             raise Exception(f"Error while getting data: {e}")
