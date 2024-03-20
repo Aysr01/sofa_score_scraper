@@ -23,14 +23,14 @@ class BigQueryOperator(BaseOperator):
         if error != [] :
             logger.error(
                     "Error while loading data of the match: " \
-                    "https://www.sofascore.com/{}-{}/{}#id:{},tab:details" \
+                    "https://www.sofascore.com/{}-{}/{}#id:{},tab:details\n" \
                     "occured errors: {}"
                     .format(
                         data_dict[0]["home_team"].lower().replace(" ", "-"),
                         data_dict[0]["away_team"].lower().replace(" ", "-"),
                         data_dict[0]["customId"],
                         data_dict[0]["id"],
-                        error["errors"]
+                        error[0]["errors"]
                     )
                 )
 
@@ -42,8 +42,8 @@ if __name__ == "__main__":
     dataset_id = os.environ.get("BQ_DATASET_ID")
     table_id = os.environ.get("BQ_TABLE_ID")
     table = f"{project_id}.{dataset_id}.{table_id}"
-    data_dict = {"name": "John", "a": 30}
+    data_dict = {"id": 1, "home_team": "John", "away_team": "test", "customId": 1, "boo": "boo"}
 
 
     hook = BigQueryOperator(table=table)
-    hook.execute(data_dict)
+    hook.execute([data_dict])

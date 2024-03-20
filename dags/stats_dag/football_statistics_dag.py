@@ -8,7 +8,7 @@ from utils.gcs_client import GcsClient
 from airflow.decorators import dag, task
 from airflow.operators.dummy import DummyOperator
 from custom_operators.bq_operator import BigQueryOperator
-from datetime import datetime
+from datetime import datetime, timedelta
 import logging
 import queue
 import concurrent.futures
@@ -151,9 +151,18 @@ def load_to_bq(prepared_data):
         bq_client.execute([data])
 
 
+
 @dag(
-        dag_id="football_results_dag_v2.1", schedule_interval='@daily',
-        start_date=datetime(2024, 2, 1), catchup=False,
+    dag_id="football_results_dag_v2.1",
+    schedule_interval='@daily',
+    start_date=datetime(2022, 8, 1),
+    catchup=True,
+    default_args={
+        'owner': 'airflow',
+        'depends_on_past': False,
+        'retries': 3,  # Number of retries for all tasks in the DAG
+        'retry_delay': timedelta(minutes=5),  # Delay between retries for all tasks in the DAG
+    }
 )
 def football_results_dag():
     # start task (does nothing)

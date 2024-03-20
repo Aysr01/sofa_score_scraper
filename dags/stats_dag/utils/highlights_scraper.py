@@ -24,17 +24,19 @@ class HighlightsScraper():
 
     def get_incidents(self, match_id: int) -> Optional[requests.Response]:
         self.url = self.base_url.format(match_id)
-        try:
-            while True:
+        while True:
+            try:
                 proxy = random.choice(self.proxies)
                 response = requests.get(self.url, headers=self.headers, proxies={'http': f"http://{proxy}="})
                 if response.status_code == 200:
                     logger.info(f"scraped data using proxy: {proxy}")
                     break
-            response = requests.get(self.url, headers=self.headers)
-        except requests.exceptions.RequestException as e:
-            logger.error(f"Error while getting data! {e}")
-            response = None  
+                if response.status_code == 404:
+                    logger.error(f"Page not found, maybe the match doesn't start yet")
+                    break
+            except Exception as e:
+                logger.error(f"the following proxy failed: {proxy}")
+                response = None  
         return response
 
     def extract_highlights(self, data: Dict) -> Dict[str, list]:

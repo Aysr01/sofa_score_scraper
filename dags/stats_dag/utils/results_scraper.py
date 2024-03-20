@@ -4,7 +4,7 @@ import json
 import logging
 from datetime import datetime, timezone
 import random
-from .settings import DESIRED_COUNTRIES
+from .settings import DESIRED_TOURNAMENTS
 
 logging.basicConfig(
     level=logging.INFO,
@@ -20,19 +20,23 @@ class ResultScraper:
             self.proxies = f.read().split("\n")
 
     def get_json(self, desired_date):
-        try:
-            headers = {
+        headers = {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
             }
-            while True:
+        while True:
+            try:
                 proxy = random.choice(self.proxies)
                 response = requests.get(self.url.format(desired_date), headers=headers, proxies={'http': f"http://{proxy}="})
                 if response.status_code == 200:
                     logger.info(f"scraped data using proxy: {proxy}")
+                    json_data = response.json()
                     break
-            json_data = response.json()
-        except Exception as e:
-            raise Exception(f"Error while getting data: {e}")
+                if response.status_code == 404:
+                    logger.error(f"Page not found! the url in question is: {self.url.format(desired_date)}")
+                    return None
+            except Exception as e:
+                logger.error(f"the following proxy failed: {proxy}")
+                json_data = None 
         return json_data
 
     
@@ -42,17 +46,18 @@ def get_events(json_data, execution_date):
         desired_data = []
         for event in events:
             try:
-                event_country = event["tournament"]["category"]["name"]
+                tournament = event["tournament"]["uniqueTournament"]["name"] 
+                country = event["tournament"]["category"]["name"]
                 start_timestamp = datetime.fromtimestamp(event["startTimestamp"], tz=timezone.utc)
-                if (event_country in DESIRED_COUNTRIES) and (start_timestamp.strftime("%Y-%m-%d") == execution_date):
+                if ((tournament, country) in DESIRED_TOURNAMENTS) and (start_timestamp.strftime("%Y-%m-%d") == execution_date):
                     desired_data.append(
                         {   
                             "id": event["id"],
                             "customId": event["customId"],
                             "startTimestamp": start_timestamp.strftime("%Y-%m-%d %H:%M:%S"),
                             "season": event["season"]["year"],
-                            "country": event_country,
-                            "tournament": event["tournament"]["uniqueTournament"]["name"],
+                            "country": country,
+                            "tournament": tournament,
                             "round": event["roundInfo"]["round"],
                             "home_team": event['homeTeam']['name'],
                             "away_team": event['awayTeam']['name'],
