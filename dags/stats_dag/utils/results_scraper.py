@@ -49,7 +49,11 @@ def get_events(json_data, execution_date):
                 tournament = event["tournament"]["uniqueTournament"]["name"] 
                 country = event["tournament"]["category"]["name"]
                 start_timestamp = datetime.fromtimestamp(event["startTimestamp"], tz=timezone.utc)
-                if ((tournament, country) in DESIRED_TOURNAMENTS) and (start_timestamp.strftime("%Y-%m-%d") == execution_date):
+                if (DESIRED_TOURNAMENTS == "ALL") or ((tournament, country) in DESIRED_TOURNAMENTS) \
+                    and (start_timestamp.strftime("%Y-%m-%d") == execution_date):
+                    round_name = event["roundInfo"].get("name", None) 
+                    round_number = event["roundInfo"].get("round", None)
+                    round = round_name or round_number or None
                     desired_data.append(
                         {   
                             "id": event["id"],
@@ -58,7 +62,7 @@ def get_events(json_data, execution_date):
                             "season": event["season"]["year"],
                             "country": country,
                             "tournament": tournament,
-                            "round": event["roundInfo"]["round"],
+                            "round_s": round,
                             "home_team": event['homeTeam']['name'],
                             "away_team": event['awayTeam']['name'],
                             "status": event["status"]["type"],
