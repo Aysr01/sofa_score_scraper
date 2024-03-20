@@ -8,6 +8,7 @@ from utils.gcs_client import GcsClient
 from airflow.decorators import dag, task
 from airflow.operators.dummy import DummyOperator
 from custom_operators.bq_operator import BigQueryOperator
+from airflow.exceptions import AirflowSkipException
 from datetime import datetime, timedelta
 import logging
 import queue
@@ -45,6 +46,12 @@ def extract_desired_info(json_data, **context):
     desired_info = get_events(json_data, ds)
     context["task_instance"].xcom_push(key="desired_info", value=desired_info)
 
+@task(task_id='skip_if_no_data')
+def skip_if_no_data(_, **context):
+    desired_data = context["task_instance"].xcom_pull(task_ids="extract_desired_info", key="desired_info")
+    if not desired_data:
+        raise AirflowSkipException("No data available for the given date")
+    logger.info("Data available, continue the process")
 
 def extract_stats_from_queue(ds):
     global ids_queue, matches_statistics
@@ -156,35 +163,29 @@ def load_to_bq(prepared_data):
     dag_id="football_results_dag_v2.1",
     schedule_interval='@daily',
     start_date=datetime(2022, 8, 1),
-    catchup=True,
+    catchup=False,
     default_args={
         'owner': 'airflow',
         'depends_on_past': False,
         'retries': 3,  # Number of retries for all tasks in the DAG
-        'retry_delay': timedelta(minutes=5),  # Delay between retries for all tasks in the DAG
+        'retry_delay': timedelta(minutes=1),  # Delay between retries for all tasks in the DAG
     }
 )
 def football_results_dag():
-    # start task (does nothing)
-    start = DummyOperator(task_id='start')
-    # end task (does nothing)
-    end = DummyOperator(task_id='end')
     #get raw data from Sofascore
     raw_data_json = get_json_data()
     # extract desired informations from matches
     desired_info = extract_desired_info(raw_data_json)
+    # skip if no data available
+    skip_or_continue = skip_if_no_data(desired_info)
     # fetch statistics of a specific match from Sofascore (possession, shots...etc)
-    data_with_statistics = fetch_statistics(desired_info)
+    data_with_statistics = fetch_statistics(skip_or_continue)
     # fetch highlights of a specific match from Sofascore
-    data_with_highlights = fetch_highlights(desired_info)
+    data_with_highlights = fetch_highlights(skip_or_continue)
     # merge statistics, highlights with the corresponding match data
     prepared_data = prepare_to_load(data_with_statistics, data_with_highlights)
     # load data to BigQuery
     loaded_data = load_to_bq(prepared_data)
-    # start connection
-    start >> raw_data_json
-    # end connection
-    loaded_data >> end
 
 # start the dag
 football_results_dag()

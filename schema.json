@@ -6,6 +6,11 @@
   },
   {
     "mode": "NULLABLE",
+    "name": "customId",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
     "name": "startTimestamp",
     "type": "TIMESTAMP"
   },
@@ -26,8 +31,8 @@
   },
   {
     "mode": "NULLABLE",
-    "name": "round",
-    "type": "INTEGER"
+    "name": "round_s",
+    "type": "STRING"
   },
   {
     "mode": "NULLABLE",
@@ -73,6 +78,11 @@
     "mode": "NULLABLE",
     "name": "is_awayTeam_national",
     "type": "BOOLEAN"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "status",
+    "type": "STRING"
   },
   {
     "fields": [

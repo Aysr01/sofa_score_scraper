@@ -17,7 +17,7 @@ services:
         - AIRFLOW__WEBSERVER__SECRET_KEY=my_secret_key
         - GCP_PROJECT_ID=foot-analyse
         - BQ_DATASET_ID=foot_data
-        - BQ_TABLE_ID=football_results
+        - BQ_TABLE_ID=football_data
         - BUCKET_ID=football_lake
         - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
         - PROXIES_PATH=/opt/airflow/proxies/valid_proxies.txt
@@ -61,7 +61,7 @@ services:
         - AIRFLOW__WEBSERVER__SECRET_KEY=my_secret_key
         - GCP_PROJECT_ID=foot-analyse
         - BQ_DATASET_ID=foot_data
-        - BQ_TABLE_ID=football_results
+        - BQ_TABLE_ID=football_data
         - BUCKET_ID=football_lake
         - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
         - PROXIES_PATH=/opt/airflow/proxies/valid_proxies.txt
@@ -78,7 +78,7 @@ services:
         - POSTGRES_DB=airflow
       logging:
         options:
-          max-size: 10m
+          max-size: 11m
           max-file: "3"
       networks:
         - sscore
