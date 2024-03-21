@@ -1,4 +1,5 @@
 #!/bin/bash
+#
 set -e
 
 if [ -e "/opt/airflow/requirements.txt" ]; then
