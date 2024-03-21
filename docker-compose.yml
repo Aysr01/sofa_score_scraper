@@ -66,6 +66,7 @@ services:
         - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
         - PROXIES_PATH=/opt/airflow/proxies/valid_proxies.txt
       entrypoint: ['/opt/airflow/script/entrypoint.sh']
+      
       command: scheduler
       networks:
         - sscore

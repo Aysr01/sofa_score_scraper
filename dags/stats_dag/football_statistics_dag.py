@@ -6,7 +6,6 @@ from utils.statistics_scraper import StatsScraper
 from utils.highlights_scraper import HighlightsScraper
 from utils.gcs_client import GcsClient
 from airflow.decorators import dag, task
-from airflow.operators.dummy import DummyOperator
 from custom_operators.bq_operator import BigQueryOperator
 from airflow.exceptions import AirflowSkipException
 from datetime import datetime, timedelta
