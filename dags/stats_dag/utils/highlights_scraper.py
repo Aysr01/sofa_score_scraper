@@ -14,13 +14,13 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class HighlightsScraper():
-    # def __init__(self):
-    #     self.base_url = "https://api.sofascore.com/api/v1/event/{}/incidents"
-    #     self.headers = {
-    #         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
-    #     }
-    #     with open(os.environ.get("PROXIES_PATH"), "r") as f: 
-    #         self.proxies = f.read().split("\n")
+    def __init__(self):
+        self.base_url = "https://api.sofascore.com/api/v1/event/{}/incidents"
+        self.headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+        }
+        with open(os.environ.get("PROXIES_PATH"), "r") as f: 
+            self.proxies = f.read().split("\n")
 
     def get_incidents(self, match_id: int) -> Optional[requests.Response]:
         self.url = self.base_url.format(match_id)
