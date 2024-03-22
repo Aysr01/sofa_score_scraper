@@ -17,7 +17,7 @@ services:
         - AIRFLOW__WEBSERVER__SECRET_KEY=my_secret_key
         - GCP_PROJECT_ID=foot-analyse
         - BQ_DATASET_ID=foot_data
-        - BQ_TABLE_ID=football_data
+        - BQ_TABLE_ID=football_data_table
         - BUCKET_ID=football_lake
         - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
         - PROXIES_PATH=/opt/airflow/proxies/valid_proxies.txt
@@ -61,7 +61,7 @@ services:
         - AIRFLOW__WEBSERVER__SECRET_KEY=my_secret_key
         - GCP_PROJECT_ID=foot-analyse
         - BQ_DATASET_ID=foot_data
-        - BQ_TABLE_ID=football_data
+        - BQ_TABLE_ID=football_data_table
         - BUCKET_ID=football_lake
         - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
         - PROXIES_PATH=/opt/airflow/proxies/valid_proxies.txt
