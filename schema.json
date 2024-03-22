@@ -1,46 +1,46 @@
 [
   {
-    "mode": "NULLABLE",
+    "mode": "REQUIRED",
     "name": "id",
     "type": "INTEGER"
   },
   {
-    "mode": "NULLABLE",
+    "mode": "REQUIRED",
     "name": "customId",
     "type": "STRING"
   },
   {
-    "mode": "NULLABLE",
+    "mode": "REQUIRED",
     "name": "startTimestamp",
     "type": "TIMESTAMP"
   },
   {
-    "mode": "NULLABLE",
+    "mode": "REQUIRED",
     "name": "season",
     "type": "STRING"
   },
   {
-    "mode": "NULLABLE",
+    "mode": "REQUIRED",
     "name": "country",
     "type": "STRING"
   },
   {
-    "mode": "NULLABLE",
+    "mode": "REQUIRED",
     "name": "tournament",
     "type": "STRING"
   },
   {
-    "mode": "NULLABLE",
+    "mode": "REQUIRED",
     "name": "round_s",
     "type": "STRING"
   },
   {
-    "mode": "NULLABLE",
+    "mode": "REQUIRED",
     "name": "home_team",
     "type": "STRING"
   },
   {
-    "mode": "NULLABLE",
+    "mode": "REQUIRED",
     "name": "away_team",
     "type": "STRING"
   },
@@ -80,7 +80,7 @@
     "type": "BOOLEAN"
   },
   {
-    "mode": "NULLABLE",
+    "mode": "REQUIRED",
     "name": "status",
     "type": "STRING"
   },
@@ -3263,6 +3263,55 @@
         "mode": "REPEATED",
         "name": "injuryTime",
         "type": "RECORD"
+      },
+      {
+        "fields": [
+          {
+            "name": "player",
+            "type": "RECORD",
+            "fields": [
+              {
+                "name": "name",
+                "type": "STRING"
+              },
+              {
+                "name": "position",
+                "type": "STRING"
+              },
+              {
+                "name": "jerseyNumber",
+                "type": "STRING"
+              }
+            ]
+          },
+          {
+            "name": "homeScore",
+            "type": "INTEGER"
+          },
+          {
+            "name": "awayScore",
+            "type": "INTEGER"
+          },
+          {
+            "name": "sequence",
+            "type": "INTEGER"
+          },
+          {
+            "name": "isHome",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "type",
+            "type": "STRING"
+          },
+          {
+            "name": "reason",
+            "type": "STRING"
+          }
+        ],
+      "name": "penaltyShootout",
+      "type": "RECORD",
+      "mode": "REPEATED"
       },
       {
         "fields": [
