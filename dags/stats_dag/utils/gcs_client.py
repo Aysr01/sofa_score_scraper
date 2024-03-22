@@ -25,9 +25,8 @@ class GcsClient():
         if not self.bucket.exists():
             logger.critical("Bucket not found, creating a new one...")
             bucket = storage.Bucket(self.client, name=self.bucket_name)
-            bucket.versioning_enabled = True
             bucket.create()
-            logger.info("Bucket create successfully")
+            logger.info("Bucket had been created successfully")
 
     def upload_data(self, content, destination):
         blob = self.bucket.blob(destination)
