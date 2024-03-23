@@ -156,7 +156,8 @@ class HighlightsScraper():
         return extracted_highlights
 
 if __name__ == "__main__":
+    os.environ["PROXIES_PATH"] = r"proxies\valid_proxies.txt"
     scraper = HighlightsScraper()
-    match_id = 11367973
+    match_id = 10230639
     with open("highlights.json", "w") as f:
         json.dump(scraper.get_highlights(match_id), f, indent=4)
