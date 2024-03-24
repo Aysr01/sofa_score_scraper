@@ -7,6 +7,8 @@ from utils.highlights_scraper import HighlightsScraper
 from utils.gcs_client import GcsClient
 from airflow.decorators import dag, task
 from custom_operators.bq_operator import BigQueryOperator
+from airflow.operators.dummy_operator import DummyOperator
+from airflow.operators.python_operator import BranchPythonOperator
 from airflow.exceptions import AirflowSkipException
 from datetime import datetime, timedelta
 import logging
@@ -46,6 +48,22 @@ def extract_desired_info(json_data, **context):
     context["task_instance"].xcom_push(key="desired_info", value=desired_info)
 
 
+def skip_or_not(**context):
+    desired_data = context['task_instance'].xcom_pull(task_ids="extract_desired_info", key="desired_info")
+    if not desired_data:
+        return "end"
+    return "continue"
+
+skip_or_continue = BranchPythonOperator(
+    task_id='skip_or_continue',
+    python_callable=skip_or_not,
+)
+
+end_ = DummyOperator(task_id='end')
+
+
+continue_ = DummyOperator(task_id='continue')
+
 def extract_stats_from_queue(ds):
     global ids_queue, matches_statistics
     stats_scraper = StatsScraper()
@@ -77,7 +95,7 @@ def extract_stats_from_queue(ds):
             matches_statistics.put({"statistics": match_stats, "id": match["id"]})
 
 @task(task_id='fetch_statistics')
-def fetch_statistics(_, **context):
+def fetch_statistics(**context):
     desired_data = context["task_instance"].xcom_pull(task_ids="extract_desired_info", key="desired_info")
     global ids_queue, matches_statistics
     for match in desired_data:
@@ -119,7 +137,7 @@ def extract_highlights_from_queue(ds):
             matches_highlights.put({"highlights": match_highlights, "id": match["id"]})
 
 @task(task_id='fetch_highlights')
-def fetch_highlights(_, **context):
+def fetch_highlights(**context):
     desired_data = context["task_instance"].xcom_pull(task_ids="extract_desired_info", key="desired_info")
     global ids_queue2, matches_highlights
     for match in desired_data:
@@ -169,10 +187,15 @@ def football_results_dag():
     raw_data_json = get_json_data()
     # extract desired informations from matches
     desired_info = extract_desired_info(raw_data_json)
+    desired_info >> skip_or_continue
+    # skip or continue based on the availability of data
+    skip_or_continue >> [end_, continue_]
     # fetch statistics of a specific match from Sofascore (possession, shots...etc)
-    data_with_statistics = fetch_statistics(desired_info)
+    data_with_statistics = fetch_statistics()
     # fetch highlights of a specific match from Sofascore
-    data_with_highlights = fetch_highlights(desired_info)
+    data_with_highlights = fetch_highlights()
+    #continue if  data available
+    continue_ >> [data_with_statistics, data_with_highlights]
     # merge statistics, highlights with the corresponding match data
     prepared_data = prepare_to_load(data_with_statistics, data_with_highlights)
     # load data to BigQuery
