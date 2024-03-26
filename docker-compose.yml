@@ -1,10 +1,11 @@
 version: '3'
 
 networks:
-  sscore:
+  sofanet:
 
 services:
   webserver:
+      container_name: webserver
       image: apache/airflow:slim-latest-python3.11
       entrypoint: ['/opt/airflow/script/entrypoint.sh']
       command: webserver
@@ -40,9 +41,10 @@ services:
         timeout: 90s
         retries: 3
       networks:
-        - sscore
+        - sofanet
 
   scheduler:
+      container_name: scheduler
       image: apache/airflow:slim-latest-python3.11
       depends_on:
         webserver:
@@ -69,7 +71,7 @@ services:
       
       command: scheduler
       networks:
-        - sscore
+        - sofanet
 
   postgres:
       image: postgres:14.10-bullseye
@@ -82,4 +84,4 @@ services:
           max-size: 11m
           max-file: "3"
       networks:
-        - sscore
+        - sofanet

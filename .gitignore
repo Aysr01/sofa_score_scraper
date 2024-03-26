@@ -4,4 +4,4 @@ statistics.json
 credentials/
 logs/
 proxies/
-.gitingore
+**/__pycache__/
