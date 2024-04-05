@@ -50,11 +50,13 @@ In the file `dags/stats_dag/utils/settings.py`, set the `DESIRED_TOURNAMENT` var
 If you want to scrape data for all the leagues across the world, set the DESIRED_TOURNAMENT variable to "ALL".
 
 NB: you should write league names as they are in Sofascore.
+
 ![image](https://github.com/Aysr01/sofa_score_scraper/assets/114707989/f7921ceb-e204-4ba1-91ba-1776a6a9da9b)
 
 ### 2.6- Configure Docker Compose file
 In the "docker-compose.yml" file and precisely in the webserver and scheduler services, change the following environment variables with the configurations that
 you set while creating the GCS bucket and BQ table.
+
 ![image](https://github.com/Aysr01/sofa_score_scraper/assets/114707989/6088d765-da73-461c-87c0-fd1e68a66fb4)
 
 ### 2.7- Run containers
