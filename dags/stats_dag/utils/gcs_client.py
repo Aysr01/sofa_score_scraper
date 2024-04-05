@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 class GcsClient():
     def __init__(self):
-        self.bucket_name = "football_lake" #os.environ["BUCKET_ID"]
+        self.bucket_name = os.environ["BUCKET_ID"]
         self.client = storage.Client()
         self.bucket = self.client.bucket(self.bucket_name)
         if not self.bucket.exists():
