@@ -47,7 +47,7 @@ Make sure to thoroughly test the proxies to ensure they are working correctly be
 
 ### 2.5- Configure Tournament Selection
 In the file `dags/stats_dag/utils/settings.py`, set the `DESIRED_TOURNAMENT` variable to specify the tournament you want to fetch data for.
-If you want to scrape data for all the leagues across the world, set the DESIRED_TOURNAMENT variable to "ALL".
+If you want to scrape data for all the leagues across the world, set the `DESIRED_TOURNAMENT` variable to "ALL".
 
 NB: you should write league names as they are in Sofascore.
 
