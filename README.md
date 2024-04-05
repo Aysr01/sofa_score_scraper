@@ -71,4 +71,17 @@ if you aspire to scrape a range of dates run the following command in the schedu
 ### 2.8- Deploy the Dag on Cloud Composer (Optional)
 The scraping process for the Sofascore data may take a while to complete. To ensure reliable and efficient execution, it is recommended to run the Sofascore scraper DAG (Directed Acyclic Graph) in Google Cloud Composer, a managed Apache Airflow service on Google Cloud Platform.
 
+## 3- Dag Overview
+The core tasks in our dag are:
 
+![image](https://github.com/Aysr01/sofa_score_scraper/assets/114707989/24c7aa2c-f2b2-4501-b14c-ad3da6b0d79a)
+
+- **get_json_data:** This task retrieves data from Sofascore.
+- **extract_desired_info:** This task filters the fetched data based on the set settings.
+- **skip_or_continue:** This task  decides whether to continue or skip the process if there is no match in the execution date.
+- **end_OperatorTask:** This task represents the end of the workflow.
+- **continue:** Resume the workflow.
+- **fetch_statistics:** This task fetches statistics of a specific match.
+- **fetch_highlights:** This task fetches the timeline of important events in a specific match.
+- **prepare_to_load:** This task prepares the data for loading into BigQuery.
+- **load_to_bq:** This task loads the data into a BigQuery (BQ) table.
