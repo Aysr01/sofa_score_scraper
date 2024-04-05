@@ -1,8 +1,6 @@
 dags/test_*
-scraped_data/*.csv
-statistics.json
-credentials/
-logs/
-proxies/
+credentials/*.json
+logs/*
+proxies/*
 **/__pycache__/
 *.pyc
