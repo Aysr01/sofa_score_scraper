@@ -1,6 +1,5 @@
 dags/test_*
 credentials/*.json
 logs/*
-proxies/*
 **/__pycache__/
 *.pyc
