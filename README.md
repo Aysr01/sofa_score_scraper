@@ -71,7 +71,11 @@ if you aspire to scrape a range of dates run the following command in the schedu
 ### 2.8- Deploy the Dag on Cloud Composer (Optional)
 The scraping process for the Sofascore data may take a while to complete. To ensure reliable and efficient execution, it is recommended to run the Sofascore scraper DAG (Directed Acyclic Graph) in Google Cloud Composer, a managed Apache Airflow service on Google Cloud Platform.
 
-## 3- Dag Overview
+## 3- ETL Architecture
+
+<center><img src="https://github.com/Aysr01/sofa_score_scraper/assets/114707989/fa95a0a7-748c-4039-b019-4d4625b8ac43" width="800" /></center>
+
+## 4- Dag Overview
 The core tasks in our dag are:
 
 ![image](https://github.com/Aysr01/sofa_score_scraper/assets/114707989/24c7aa2c-f2b2-4501-b14c-ad3da6b0d79a)
