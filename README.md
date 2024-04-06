@@ -73,7 +73,7 @@ The scraping process for the Sofascore data may take a while to complete. To ens
 
 ## 3- ETL Architecture
 
-<center><img src="https://github.com/Aysr01/sofa_score_scraper/assets/114707989/fa95a0a7-748c-4039-b019-4d4625b8ac43" width="800" /></center>
+<center><img src="https://github.com/Aysr01/sofa_score_scraper/assets/114707989/1dae50db-318b-44a8-a901-9de7d1261ce3" width="800" /></center>
 
 ## 4- Dag Overview
 The core tasks in our dag are:
