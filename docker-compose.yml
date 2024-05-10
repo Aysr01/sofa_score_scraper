@@ -16,10 +16,10 @@ services:
         - EXECUTOR=LocalExecutor
         - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
         - AIRFLOW__WEBSERVER__SECRET_KEY=my_secret_key
-        - GCP_PROJECT_ID=foot-analyse
-        - BQ_DATASET_ID=foot_data
+        - GCP_PROJECT_ID=foot-analysis-422908
+        - BQ_DATASET_ID=football_dataset
         - BQ_TABLE_ID=football_results
-        - BUCKET_ID=football_lake
+        - BUCKET_ID=football_bucket
         - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
         - PROXIES_PATH=/opt/airflow/proxies/valid_proxies.txt
       logging:
@@ -61,10 +61,10 @@ services:
         - EXECUTOR=LocalExecutor
         - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
         - AIRFLOW__WEBSERVER__SECRET_KEY=my_secret_key
-        - GCP_PROJECT_ID=foot-analyse
-        - BQ_DATASET_ID=foot_data
+        - GCP_PROJECT_ID=foot-analysis-422908
+        - BQ_DATASET_ID=football_dataset
         - BQ_TABLE_ID=football_results
-        - BUCKET_ID=football_lake
+        - BUCKET_ID=football_bucket
         - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/credentials/credentials.json
         - PROXIES_PATH=/opt/airflow/proxies/valid_proxies.txt
       entrypoint: ['/opt/airflow/script/entrypoint.sh']
@@ -75,6 +75,7 @@ services:
 
   postgres:
       image: postgres:14.10-bullseye
+      container_name: postgres
       environment:
         - POSTGRES_USER=airflow
         - POSTGRES_PASSWORD=airflow
