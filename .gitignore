@@ -3,3 +3,5 @@ credentials/*.json
 logs/*
 **/__pycache__/
 *.pyc
+infra/.terraform*
+infra/terraform.tfstate*
